@@ -6,6 +6,10 @@
   src: url(./fonts/Speed.otf);
   font-weight: 400;
 }
+a,
+span {
+  @apply inline-block;
+}
 body {
   @apply font-GothamPro text-[15px] font-normal text-white bg-[#090C18] leading-[100%];
 }
@@ -13,3 +17,16 @@ body {
   @apply max-w-[1294px] mx-auto;
 }
 
+.gold-btn {
+  clip-path: polygon(
+    4% 0%,
+    95% 0%,
+    100% 15%,
+    100% 80%,
+    95% 100%,
+    5% 100%,
+    0% 90%,
+    0% 15%
+  );
+  @apply w-[270px] mx-auto h-[65px] bg-gradient-to-b from-[#FD9C00] to-[#FFD301] font-semibold hover:brightness-110 transition flex items-center justify-center text-[#895000] text-xl;
+}
