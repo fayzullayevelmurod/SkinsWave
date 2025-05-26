@@ -48,13 +48,13 @@ export default function CustomerReviews() {
           />
           <div className='flex gap-2'>
             <button
-              className='bg-swiper-btn w-[62px] h-[62px] flex items-center justify-center rounded-[9px] prev-button'
+              className='bg-swiper-btn w-[62px] h-[62px] flex items-center justify-center rounded-[9px] prev-button-2'
               aria-label='Previous slide'
             >
               <img src={assets.prevChevron} alt='Previous' />
             </button>
             <button
-              className='bg-swiper-btn w-[62px] h-[62px] flex items-center justify-center rounded-[9px] next-button'
+              className='bg-swiper-btn w-[62px] h-[62px] flex items-center justify-center rounded-[9px] next-button-2'
               aria-label='Next slide'
             >
               <img src={assets.nextChevron} alt='Next' />
@@ -67,8 +67,8 @@ export default function CustomerReviews() {
           spaceBetween={10}
           slidesPerView={3}
           navigation={{
-            prevEl: '.prev-button',
-            nextEl: '.next-button',
+            prevEl: '.prev-button-2',
+            nextEl: '.next-button-2',
           }}
           className='w-full'
           style={{ overflow: 'visible' }}
