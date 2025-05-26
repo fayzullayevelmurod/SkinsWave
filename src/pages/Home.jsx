@@ -1,5 +1,6 @@
 import GetMorePlay from '../components/home/GetMorePlay';
 import Intro from '../components/home/Intro';
+import MostTraded from '../components/home/MostTraded';
 import Footer from '../layouts/Footer';
 import Header from '../layouts/Header';
 
@@ -10,6 +11,7 @@ export default function Home() {
       <div className='container'>
         <Intro />
         <GetMorePlay />
+        <MostTraded />
       </div>
       <Footer />
     </>

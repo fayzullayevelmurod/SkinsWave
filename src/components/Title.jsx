@@ -1,6 +1,6 @@
 export default function Title({ title, subTitle, subTitleClass }) {
   return (
-    <>
+    <div>
       <h2 className='text-[56px] font-Speed text-transparent bg-clip-text bg-text-gradient leading-[86%]'>
         {title}
       </h2>
@@ -11,6 +11,6 @@ export default function Title({ title, subTitle, subTitleClass }) {
           {subTitle}
         </p>
       )}
-    </>
+    </div>
   );
 }

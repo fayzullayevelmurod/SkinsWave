@@ -21,6 +21,10 @@ export default {
         'play-card-two': 'url(src/assets/play-card-bg-2.png)',
         'play-card-three': 'url(src/assets/play-card-bg-3.png)',
         'play-card-four': 'url(src/assets/play-card-bg-4.png)',
+        'most-card-one': 'url(src/assets/most-card-1.png)',
+        'most-card-two': 'url(src/assets/most-card-2.png)',
+        'most-card-three': 'url(src/assets/most-card-3.png)',
+        'most-card-four': 'url(src/assets/most-card-4.png)',
       },
       boxShadow: {
         'img-shadow': "0px 0px 8.7px 0px #9882E0B0",
