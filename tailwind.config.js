@@ -14,8 +14,6 @@ export default {
       backgroundImage: {
         'nav-link-gradient': "linear-gradient(180deg, #252530 0%, #11111D 100%)",
         'btn-bg': "url(/src/assets/bt-bg.png)",
-        "intro-img": "url(/src/assets/intro-img.png)",
-        "intro-bg": "url(/src/assets/intro-bg.png)",
         'text-gradient': 'linear-gradient(180deg, #FD9C00 0%, #FFD301 100%)',
         'play-card-one': 'url(/images/play-card-bg-1.png)',
         'play-card-two': 'url(/images/play-card-bg-2.png)',
@@ -25,9 +23,11 @@ export default {
         'most-card-two': 'url(/images/most-card-2.png)',
         'most-card-three': 'url(/images/most-card-3.png)',
         'most-card-four': 'url(/images/most-card-4.png)',
-        'trade-skin-bg-one': 'url(images/trade-skins-bg-1.png)',
-        'trade-skin-bg-two': 'url(images/trade-skins-bg-2.png)',
-        'trade-skin-bg-three': 'url(images/trade-skins-bg-3.png)',
+        'trade-skin-bg-one': 'url(/images/trade-skins-bg-1.png)',
+        'trade-skin-bg-two': 'url(/images/trade-skins-bg-2.png)',
+        'trade-skin-bg-three': 'url(/images/trade-skins-bg-3.png)',
+        'swiper-btn': 'linear-gradient(180deg, #252447 0%, #1E1D35 100%)',
+        'cheaper-items-bg': 'url(/images/cheaper-items-bg.png)',
       },
       boxShadow: {
         'img-shadow': "0px 0px 8.7px 0px #9882E0B0",

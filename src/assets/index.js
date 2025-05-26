@@ -6,6 +6,7 @@ import introImg from './intro-img.png';
 import prevChevron from './prev-chevron.svg';
 import nextChevron from './next-chevron.svg';
 import eye from './eye.svg';
+import star from './star.svg';
 export default {
   groupIcon,
   arrowDown,
@@ -14,5 +15,6 @@ export default {
   introImg,
   prevChevron,
   nextChevron,
-  eye
+  eye,
+  star
 }

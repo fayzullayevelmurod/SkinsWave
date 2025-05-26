@@ -1,3 +1,5 @@
+import CheaperItems from '../components/home/CheaperItems';
+import CustomerReviews from '../components/home/CustomerReviews';
 import GetMorePlay from '../components/home/GetMorePlay';
 import Intro from '../components/home/Intro';
 import MostTraded from '../components/home/MostTraded';
@@ -14,7 +16,9 @@ export default function Home() {
         <GetMorePlay />
         <MostTraded />
       </div>
-        <TradeSkins />
+      <TradeSkins />
+      <CustomerReviews />
+      <CheaperItems />
       <Footer />
     </>
   );
