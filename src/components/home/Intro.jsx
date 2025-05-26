@@ -8,7 +8,7 @@ export default function Intro() {
         src={assets.introImg}
         alt=''
       />
-      <h1 className='text-[101px] leading-[86%] font-normal font-Speed text-transparent bg-clip-text bg-text-gradient'>
+      <h1 className='text-[101px] leading-[86%] font-normal font-Speed text-transparent bg-clip-text bg-text-gradient [filter:drop-shadow(0px_3.85px_8px_#9A2E1B)]'>
         Trade skins <br />
         CS2 (CS:GO)
       </h1>

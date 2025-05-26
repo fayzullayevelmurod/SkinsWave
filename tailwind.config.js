@@ -25,6 +25,9 @@ export default {
         'most-card-two': 'url(src/assets/most-card-2.png)',
         'most-card-three': 'url(src/assets/most-card-3.png)',
         'most-card-four': 'url(src/assets/most-card-4.png)',
+        'trade-skin-bg-one': 'url(images/trade-skins-bg-1.png)',
+        'trade-skin-bg-two': 'url(images/trade-skins-bg-2.png)',
+        'trade-skin-bg-three': 'url(images/trade-skins-bg-3.png)',
       },
       boxShadow: {
         'img-shadow': "0px 0px 8.7px 0px #9882E0B0",

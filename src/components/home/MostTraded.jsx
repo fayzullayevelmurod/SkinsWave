@@ -118,7 +118,9 @@ export default function MostTraded() {
         </div>
       </div>
 
-      <Swiper
+      <div className='relative'>
+        <img className='absolute -bottom-[87px] left-1/2 -translate-x-1/2 w-[1229px] h-[370px]' src="images/bottom-lines.png" alt="" />
+    <Swiper
         modules={[Navigation]}
         spaceBetween={18}
         slidesPerView={4}
@@ -150,6 +152,7 @@ export default function MostTraded() {
           </SwiperSlide>
         ))}
       </Swiper>
+      </div>
     </section>
   );
 }
