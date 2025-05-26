@@ -11,7 +11,7 @@ span {
   @apply inline-block;
 }
 body {
-  @apply font-GothamPro text-[15px] font-normal text-white bg-[#090C18] leading-[100%];
+  @apply font-GothamPro text-xs-base font-normal text-white bg-[#090C18] leading-[100%];
 }
 .container {
   @apply max-w-[1294px] mx-auto;

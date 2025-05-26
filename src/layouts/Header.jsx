@@ -8,7 +8,7 @@ export default function Header() {
         <ul className='gap-[70px] flex items-center'>
           <li>
             <a
-              className='flex items-center gap-2 text-white text-[15px] leading-[100%] bg-nav-link-gradient py-4 px-[34px] rounded-xl border-b-[2px] border-[#9882E0]'
+              className='flex items-center gap-2 text-white text-xs-base leading-[100%] bg-nav-link-gradient py-4 px-[34px] rounded-xl border-b-[2px] border-[#9882E0]'
               href='#!'
             >
               <img
