@@ -1,3 +1,4 @@
+import BottomHero from '../components/home/BottomHero';
 import CheaperItems from '../components/home/CheaperItems';
 import CustomerReviews from '../components/home/CustomerReviews';
 import GetMorePlay from '../components/home/GetMorePlay';
@@ -19,6 +20,7 @@ export default function Home() {
       <TradeSkins />
       <CustomerReviews />
       <CheaperItems />
+      <BottomHero />
       <Footer />
     </>
   );
