@@ -11,8 +11,8 @@ export default function TradeSkinsInstantly() {
             subTitleClass='md:mx-auto'
           />
         </div>
-        <div className='lg:flex space-y-5 md:mt-[124px] mt-10 gap-[10px]'>
-          <div className='md:flex hidden py-[25px] px-[33px] border border-[#242462] rounded-[9px] bg-card-bg items-center justify-between w-[99px] relative'>
+        <div className='lg:flex lg:space-y-0 space-y-5 md:mt-[124px] mt-10 gap-[10px]'>
+          <div className='lg:flex hidden py-[25px] px-[33px] border border-[#242462] rounded-[9px] bg-card-bg items-center justify-between w-[99px] relative'>
             <span className='text-[17px] leading-[137%] opacity-60 whitespace-nowrap -rotate-90 absolute left-1/2 -translate-x-1/2 bottom-[85px]'>
               Sign in via Steam
             </span>
@@ -20,7 +20,7 @@ export default function TradeSkinsInstantly() {
               <img src='/images/check.svg' alt='' />
             </div>
           </div>
-          <div className='md:flex hidden py-[25px] px-[33px] border border-[#242462] rounded-[9px] bg-card-bg items-center justify-between w-[99px] relative'>
+          <div className='lg:flex hidden py-[25px] px-[33px] border border-[#242462] rounded-[9px] bg-card-bg items-center justify-between w-[99px] relative'>
             <span className='text-[17px] leading-[137%] opacity-60 w-[165px] -rotate-90 absolute left-1/2 -translate-x-1/2 bottom-[85px]'>
               Select Favorite <br /> CS2 (CS:GO) Skins
             </span>
@@ -29,7 +29,7 @@ export default function TradeSkinsInstantly() {
             </div>
           </div>
 
-          <div className='md:h-auto h-[485px] md:hidden flex-col flex justify-end bg-media-card-midle bg-no-repeat w-full bg-[length:100%_100%] relative z-10 rounded-[9px] py-[25px] px-5 overflow-x-clip'>
+          <div className='lg:h-auto h-[485px] lg:hidden flex-col flex justify-end bg-media-card-midle bg-no-repeat w-full bg-[length:100%_100%] relative z-10 rounded-[9px] py-[25px] px-5 overflow-x-clip'>
             <img
               className='absolute top-[-35px] right-[-76px] z-10 min-w-[401px]'
               src='/images/card-img-1.png'
@@ -72,7 +72,7 @@ export default function TradeSkinsInstantly() {
             </a>
           </div>
 
-          <div className='md:h-auto h-[485px] md:hidden flex-col flex justify-end bg-media-card-midle bg-no-repeat w-full bg-cover md:bg-[length:100%_100%] relative z-10 rounded-[9px] py-[25px] px-5'>
+          <div className='lg:h-auto h-[485px] lg:hidden flex-col flex justify-end bg-media-card-midle bg-no-repeat w-full bg-cover md:bg-[length:100%_100%] relative z-10 rounded-[9px] py-[25px] px-5'>
             <img
               className='absolute -top-10 left-1/2 -translate-x-1/2 z-10 min-w-[445px]'
               src='/images/card-midle-img.png'
