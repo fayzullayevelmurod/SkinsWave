@@ -29,7 +29,12 @@ export default {
         'swiper-btn': 'linear-gradient(180deg, #252447 0%, #1E1D35 100%)',
         'cheaper-items-bg': 'url(/images/cheaper-items-bg.png)',
         'bottom-hero-bg': 'url(/images/bottom-hero-bg.png)',
-        'cheaper-bg-media': 'url(/images/cheaper-bg-media.png)'
+        'cheaper-bg-media': 'url(/images/cheaper-bg-media.png)',
+        'card-bg': 'linear-gradient(180deg, #27154B 0%, #171432 100%)',
+        'card-bg-1': 'url(/images/card-bg-1.png)',
+        'media-card-last': 'url(/images/media-card-last.png)',
+        'media-card-midle': 'url(/images/media-card-midle.png)',
+        'card-gradient': 'linear-gradient(180deg, rgba(36, 19, 69, 0) 0%, rgba(36, 19, 69, 0.77) 56.25%, #241345 100%)'
       },
       boxShadow: {
         'img-shadow': "0px 0px 8.7px 0px #9882E0B0",

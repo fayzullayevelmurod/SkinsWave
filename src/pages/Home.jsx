@@ -5,6 +5,7 @@ import GetMorePlay from '../components/home/GetMorePlay';
 import Intro from '../components/home/Intro';
 import MostTraded from '../components/home/MostTraded';
 import TradeSkins from '../components/home/TradeSkins';
+import TradeSkinsInstantly from '../components/home/TradeSkinsInstantly';
 import Footer from '../layouts/Footer';
 import Header from '../layouts/Header';
 
@@ -18,6 +19,7 @@ export default function Home() {
         <MostTraded />
       </div>
       <TradeSkins />
+      <TradeSkinsInstantly />
       <CustomerReviews />
       <CheaperItems />
       <BottomHero />
