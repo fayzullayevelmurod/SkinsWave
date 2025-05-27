@@ -28,5 +28,25 @@ body {
     0% 90%,
     0% 15%
   );
-  @apply w-[270px] mx-auto h-[65px] bg-gradient-to-b from-[#FD9C00] to-[#FFD301] font-semibold hover:brightness-110 transition flex items-center justify-center text-[#895000] text-xl;
+  @apply md:w-[270px] mx-auto md:h-[65px] w-[186px] h-[43px] bg-gradient-to-b from-[#FD9C00] to-[#FFD301] font-semibold hover:brightness-110 transition flex items-center justify-center text-[#895000] md:text-xl text-sm;
+}
+@media (max-width: 1350px) {
+  .container {
+    @apply max-w-[100%] md:px-5 px-[15px];
+  }
+}
+@media (max-width: 768px) {
+  .cheaper-gold-btn {
+    @apply w-full h-[46px];
+    clip-path: polygon(
+      3% 0%,
+      97% 0%,
+      100% 15%,
+      100% 85%,
+      97% 100%,
+      3% 100%,
+      0% 90%,
+      0% 15%
+    );
+  }
 }

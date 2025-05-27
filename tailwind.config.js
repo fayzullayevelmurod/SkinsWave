@@ -28,7 +28,8 @@ export default {
         'trade-skin-bg-three': 'url(/images/trade-skins-bg-3.png)',
         'swiper-btn': 'linear-gradient(180deg, #252447 0%, #1E1D35 100%)',
         'cheaper-items-bg': 'url(/images/cheaper-items-bg.png)',
-        'bottom-hero-bg': 'url(/images/bottom-hero-bg.png)'
+        'bottom-hero-bg': 'url(/images/bottom-hero-bg.png)',
+        'cheaper-bg-media': 'url(/images/cheaper-bg-media.png)'
       },
       boxShadow: {
         'img-shadow': "0px 0px 8.7px 0px #9882E0B0",

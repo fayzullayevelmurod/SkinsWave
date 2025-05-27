@@ -48,7 +48,7 @@ export default function MostTraded() {
         />
 
         {/* Navigation buttons before Title */}
-        <div className='flex gap-3'>
+        <div className='md:flex hidden gap-3'>
           <a
             className='px-8 py-3 flex items-center gap-2 rounded-[13px] bg-[#211B36] text-base text-[#9882E0]'
             href='#!'
@@ -119,39 +119,61 @@ export default function MostTraded() {
       </div>
 
       <div className='relative'>
-        <img className='absolute -bottom-[87px] left-1/2 -translate-x-1/2 w-[1229px] h-[370px]' src="images/bottom-lines.png" alt="" />
-    <Swiper
-        modules={[Navigation]}
-        spaceBetween={18}
-        slidesPerView={4}
-        speed={700}
-        navigation={{
-          prevEl: '.prev-button',
-          nextEl: '.next-button',
-        }}
-        className='w-full overflow-visible swiper-container'
-        style={{ overflow: 'visible' }}
-      >
-        {cards.map((card, index) => (
-          <SwiperSlide key={index}>
-            <div
-              className={`${card.bg} bg-[length:100%_100%] bg-no-repeat px-5 py-9 overflow-hidden relative h-[283px] flex justify-end flex-col`}
-            >
-              <div className='h-[187px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] flex items-start justify-center'>
-                <img
-                  className='drop-shadow-[-7px_8px_15.4px_#00000054 ] w-fit'
-                  src={card.image}
-                  alt={card.title}
-                />
+        <img
+          className='md:block hidden absolute -bottom-[87px] left-1/2 -translate-x-1/2 w-[1229px] h-[370px]'
+          src='images/bottom-lines.png'
+          alt=''
+        />
+        <Swiper
+          modules={[Navigation]}
+          spaceBetween={18}
+          slidesPerView={4}
+          speed={700}
+          navigation={{
+            prevEl: '.prev-button',
+            nextEl: '.next-button',
+          }}
+          className='w-full overflow-visible swiper-container'
+          style={{ overflow: 'visible' }}
+          breakpoints={{
+            1200: {
+              spaceBetween: 8,
+              slidesPerView: 4,
+            },
+            900: {
+              spaceBetween: 8,
+              slidesPerView: 3,
+            },
+            500: {
+              spaceBetween: 8,
+              slidesPerView: 2,
+            },
+            0: {
+              spaceBetween: 15,
+              slidesPerView: 1.2,
+            },
+          }}
+        >
+          {cards.map((card, index) => (
+            <SwiperSlide key={index}>
+              <div
+                className={`${card.bg} bg-[length:100%_100%] bg-no-repeat px-5 py-9 overflow-hidden relative h-[283px] flex justify-end flex-col`}
+              >
+                <div className='h-[187px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] flex items-start justify-center'>
+                  <img
+                    className='drop-shadow-[-7px_8px_15.4px_#00000054 ] w-fit'
+                    src={card.image}
+                    alt={card.title}
+                  />
+                </div>
+                <h3 className='text-xl leading-[167%] mb-3'>{card.title}</h3>
+                <span className='text-xs-base text-[#966EF5]'>
+                  from {card.price}
+                </span>
               </div>
-              <h3 className='text-xl leading-[167%] mb-3'>{card.title}</h3>
-              <span className='text-xs-base text-[#966EF5]'>
-                from {card.price}
-              </span>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
     </section>
   );

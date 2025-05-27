@@ -39,7 +39,7 @@ export default function CustomerReviews() {
   ];
 
   return (
-    <section className='relative py-[144px]'>
+    <section className='relative md:py-[144px] pt-[52px] pb-16 md:block hidden'>
       <div className='container'>
         <div className='flex items-end justify-between mb-[47px]'>
           <Title

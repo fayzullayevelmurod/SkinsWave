@@ -5,7 +5,7 @@ export default function Header() {
     <header className='py-4'>
       <div className='container flex items-center justify-between gap-4'>
         <h2 className='text-white text-xl font-normal'>SkinsWave</h2>
-        <ul className='gap-[70px] flex items-center'>
+        <ul className='xl:gap-[70px] gap-5 lg:flex items-center hidden'>
           <li>
             <a
               className='flex items-center gap-2 text-white text-xs-base leading-[100%] bg-nav-link-gradient py-4 px-[34px] rounded-xl border-b-[2px] border-[#9882E0]'
@@ -19,7 +19,7 @@ export default function Header() {
               <span>Home</span>
             </a>
           </li>
-          <li className='-ml-9'>
+          <li className='xl:-ml-9'>
             <a
               className='text-[#7D7D9E] hover:text-white duration-300'
               href='#!'
@@ -63,7 +63,7 @@ export default function Header() {
             <img src={assets.arrowDown} alt='' />
           </div>
           <a
-            className='flex items-center gap-[10px] w-[212px] h-[52px] justify-center text-white bg-btn-bg bg-no-repeat  bg-[length:100%_100%]'
+            className='lg:flex hidden items-center gap-[10px] w-[212px] h-[52px] justify-center text-white bg-btn-bg bg-no-repeat  bg-[length:100%_100%]'
             href='#!'
           >
             <img src={assets.steamIcon} alt='' />
