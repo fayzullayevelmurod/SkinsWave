@@ -8,7 +8,8 @@ function App() {
   return (
     <div className='overflow-hidden max-w-[1920px] mx-auto'>
       <Routes>
-        <Route path='/' element={<Home />} />
+        <Route path='/' element={<Map />} />
+        <Route path='/home' element={<Home />} />
         <Route path='/main/*' element={<Main />} />
         <Route path='/trade-skins' element={<TradeSkins />} />
       </Routes>
