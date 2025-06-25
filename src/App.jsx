@@ -3,6 +3,7 @@ import Main from './pages/Main';
 import TradeSkins from './pages/TradeSkins';
 import Home from './pages/Home';
 import Transactions from './pages/Transactions';
+import { Map } from './pages/Map';
 
 function App() {
   return (
