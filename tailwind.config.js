@@ -14,6 +14,7 @@ export default {
       backgroundImage: {
         'nav-link-gradient': "linear-gradient(180deg, #252530 0%, #11111D 100%)",
         'btn-bg': "url(/src/assets/bt-bg.png)",
+        'product-card-bg': "url(/images/card-bg.png)",
         'text-gradient': 'linear-gradient(180deg, #FD9C00 0%, #FFD301 100%)',
         'play-card-one': 'url(/images/play-card-bg-1.png)',
         'play-card-two': 'url(/images/play-card-bg-2.png)',
@@ -36,11 +37,13 @@ export default {
         'media-card-midle': 'url(/images/media-card-midle.png)',
         'card-gradient': 'linear-gradient(180deg, rgba(36, 19, 69, 0) 0%, rgba(36, 19, 69, 0.77) 56.25%, #241345 100%)',
         'skin-card': "linear-gradient(180deg, #161530 0%, #161525 100%)",
-        'skin-child-card': "linear-gradient(180deg, #14182B 0%, rgba(41, 27, 90, 0.7) 44.71%, #14182B 100%)"
+        'skin-child-card': "linear-gradient(180deg, #14182B 0%, rgba(41, 27, 90, 0.7) 44.71%, #14182B 100%)",
+        "tooltip-bg": "url(/images/tooltip-bg.png)",
       },
       boxShadow: {
         'img-shadow': "0px 0px 8.7px 0px #9882E0B0",
-        'fire-shadow': "0px 3.8px 14.46px 0px #9A2E1B"
+        'fire-shadow': "0px 3.8px 14.46px 0px #9A2E1B",
+
       },
       fontSize: {
         'xs-base': '15px'
@@ -49,7 +52,8 @@ export default {
 
       },
       dropShadow: {
-        "skin-shd": "-1.23px 17px 14px rgba(0, 0, 0, 0.32)"
+        "skin-shd": "-1.23px 17px 14px rgba(0, 0, 0, 0.32)",
+        'product-shd': "-6px 13px 12px rgba(0, 0, 0, 0.47)"
       }
     },
   },

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function Search() {
+export default function Search({className}) {
   const [inputValue, setInputValue] = useState('');
 
   const handleClear = () => {
@@ -8,7 +8,7 @@ export default function Search() {
   };
 
   return (
-    <div className='relative bg-[#2d2e3f] h-10 rounded'>
+    <div className={`relative bg-[#2d2e3f] h-10 rounded ${className}`}>
       <img
         className='absolute top-1/2 -translate-y-1/2 left-4'
         src='/images/search.svg'
