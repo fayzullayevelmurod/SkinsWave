@@ -717,7 +717,7 @@ const TradeSkins = () => {
                 <img src='/images/repete.svg' alt='Exchange icon' />
                 <span>Exchange</span>
               </div>
-              <button onClick={handleOpenFilter}>
+              <button className='lg:hidden block' onClick={handleOpenFilter}>
                 <img src='/images/close-2.svg' alt='' />
               </button>
             </div>
