@@ -354,7 +354,7 @@ const OfferSectionKnife = () => (
   <div className='rounded-[9px] overflow-hidden bg-[#212044]'>
     <div className='flex items-center justify-between py-[10px] px-[14px] flex-wrap gap-y-5'>
       <div className='xl:w-[389px] w-full'>
-        <Search className='bg-[#393959] h-[30px]' />
+        <Search className='sm:!bg-[#393959] !bg-[#303047] h-[30px]' />
       </div>
       <div className='flex items-center sm:gap-6 gap-1 xl:w-fit w-full justify-between'>
         <div className='flex gap-6'>
