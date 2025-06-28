@@ -34,7 +34,9 @@ export default {
         'card-bg-1': 'url(/images/card-bg-1.png)',
         'media-card-last': 'url(/images/media-card-last.png)',
         'media-card-midle': 'url(/images/media-card-midle.png)',
-        'card-gradient': 'linear-gradient(180deg, rgba(36, 19, 69, 0) 0%, rgba(36, 19, 69, 0.77) 56.25%, #241345 100%)'
+        'card-gradient': 'linear-gradient(180deg, rgba(36, 19, 69, 0) 0%, rgba(36, 19, 69, 0.77) 56.25%, #241345 100%)',
+        'skin-card': "linear-gradient(180deg, #161530 0%, #161525 100%)",
+        'skin-child-card': "linear-gradient(180deg, #14182B 0%, rgba(41, 27, 90, 0.7) 44.71%, #14182B 100%)"
       },
       boxShadow: {
         'img-shadow': "0px 0px 8.7px 0px #9882E0B0",
@@ -45,6 +47,9 @@ export default {
       },
       lineHeight: {
 
+      },
+      dropShadow: {
+        "skin-shd": "-1.23px 17px 14px rgba(0, 0, 0, 0.32)"
       }
     },
   },

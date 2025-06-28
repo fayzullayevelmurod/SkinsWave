@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import assets from '../assets';
+import { Link } from 'react-router-dom';
 
 export default function Header() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -65,12 +66,12 @@ export default function Header() {
             </a>
           </li>
           <li className='xl:-ml-9'>
-            <a
+            <Link
               className='text-[#7D7D9E] hover:text-white duration-300'
-              href='#!'
+              to='/trade-skins'
             >
               Trade Skins
-            </a>
+            </Link>
           </li>
           <li>
             <a

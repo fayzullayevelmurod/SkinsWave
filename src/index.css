@@ -30,6 +30,11 @@ body {
   );
   @apply md:w-[270px] mx-auto md:h-[65px] w-[186px] h-[43px] bg-gradient-to-b from-[#FD9C00] to-[#FFD301] font-semibold hover:brightness-110 transition flex items-center justify-center text-[#895000] md:text-xl text-sm;
 }
+.yellow-btn {
+  background: linear-gradient(180deg, #fd9c00 0%, #ffd301 100%);
+  box-shadow: 0px 3.8px 14.46px 0px #9a2e1b;
+  @apply text-base text-[#0A0D1C] flex items-center justify-center px-7 py-3 h-11 rounded-[9px] w-full;
+}
 @media (max-width: 1350px) {
   .container {
     @apply max-w-[100%] md:px-5 px-[15px];
