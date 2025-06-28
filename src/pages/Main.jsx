@@ -2,6 +2,7 @@ import { Link, Route, Routes, useLocation } from 'react-router-dom';
 import Header from '../layouts/Header';
 import Transactions from './Transactions';
 import Footer from '../layouts/Footer';
+import PersonalArea from './PersonalArea';
 
 export default function Main() {
   const location = useLocation();
@@ -56,9 +57,10 @@ export default function Main() {
             ))}
           </ul>
         </aside>
-        <div className='flex-1 bg-[#0f1224] pt-[47px] pl-[70px] pr-[67px] pb-[54px]'>
+        <div className='flex-1 bg-[#0f1224] pt-[47px] px-[60px] pb-[54px]'>
           <Routes>
             <Route path='/transactions' element={<Transactions />} />
+            <Route path='/personal' element={<PersonalArea />} />
             <Route path='/*' element={<div>404</div>} />
           </Routes>
         </div>

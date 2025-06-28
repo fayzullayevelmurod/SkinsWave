@@ -160,7 +160,7 @@ export default function TransactionTable() {
   );
 
   return (
-    <div className='max-w-6xl mx-auto mt-[38px]'>
+    <div className='mt-[38px]'>
       <div className='overflow-x-auto'>
         <table className='w-full'>
           <thead>

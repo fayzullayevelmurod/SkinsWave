@@ -1,14 +1,13 @@
 import CustomSelect from '../components/CustomSelect';
 import Search from '../components/Search';
 import TransactionTable from '../components/TransictionTable';
-import Footer from '../layouts/Footer';
 
 export default function Transactions() {
   const statusOptions = ['Status', 'Pending', 'Completed', 'Failed'];
   const typeOptions = ['Type', 'Deposit', 'Withdrawal', 'Transfer'];
 
   return (
-    <div className='p-6'>
+    <div>
       <div className='flex items-center justify-between'>
         <h2 className='text-[25px] leading-[167%] font-normal font-GothamPro text-white'>
           Transactions
