@@ -403,11 +403,11 @@ const OfferSectionKnife = () => (
     </div>
     <div className='py-5 px-[14px] grid grid-cols-4 bg-skin-card gap-[10px] custom-scroll overflow-y-auto max-h-[785px] relative'>
       {/* tooltip */}
-      <div className='tooltip bg-[#09083C38] pt-[29px] pb-[27px] px-[23px] rounded-[4px] absolute left-10 top-10 z-[100] w-[556px] shadow-[6px_29px_60.9px_0px_#00000042]  backdrop-blur-[56px]'>
+      {/* <div className='tooltip bg-[#09083C38] pt-[29px] pb-[27px] px-[23px] rounded-[4px] absolute left-10 top-10 z-[100] w-[556px] shadow-[6px_29px_60.9px_0px_#00000042]  backdrop-blur-[56px]'>
         <h3 className='text-[#B292FF] text-[15px]'>Предмет заблокирован в Steam</h3>
         <h3 className='text-[15px] my-[19px]'>Истекает: 19.06.2025, 12:00:00</h3>
         <p className='text-[#FFFFFF99]'>После этого разблокируется возможность вывода в инвентарь</p>
-      </div>
+      </div> */}
       <div className='bg-product-card-bg bg-[length:100%_100%] bg-no-repeat pb-[14px] h-fit px-3'>
         <div className='min-h-[128px] relative z-10 flex items-center justify-center'>
           <img

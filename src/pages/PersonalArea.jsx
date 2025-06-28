@@ -3,7 +3,7 @@ import assets from '../assets';
 export default function PersonalArea() {
   return (
     <div>
-      <div className='flex items-center gap-5 border-b border-[#3b3e4b] pb-[42px]'>
+      <div className='flex items-center gap-5 sm:border-b border-[#3b3e4b] sm:pb-[42px] pb-4'>
         <div className='overflow-hidden w-[43px] h-[43px] rounded-full'>
           <img
             className='w-full h-full object-cover'
@@ -20,14 +20,14 @@ export default function PersonalArea() {
         </div>
       </div>
       <div className='max-w-[670px]'>
-        <h3 className='text-xl mt-[37px]'>Settings</h3>
-        <p className='text-[15px] mt-5 mb-6 text-[#FFFFFF8A] leading-[158%]'>
+        <h3 className='text-xl sm:mt-[37px]'>Settings</h3>
+        <p className='text-[15px] md:mt-5 mt-[15px] md:mb-6 mb-5 text-[#FFFFFF8A] leading-[158%]'>
           Here you can find information about your SkinsMonkey account. Make
           sure to always provide up-to-date Trade URL and other information to
           guarantee a seamless trade experience.
         </p>
         <div>
-          <label className='text-[15px] block mb-[6px]'>Trade URL</label>
+          <label className='text-[15px] block mb-[6px] leading-[158%]'>Trade URL</label>
           <div className='h-[46px] rounded-md bg-[#23243b] w-full relative'>
             <input
               className='text-[15px] placeholder:text-[#FFFFFF73] outline-none px-6 py-3 h-full w-full bg-transparent'
@@ -42,15 +42,15 @@ export default function PersonalArea() {
           </div>
         </div>
       </div>
-      <div className='border-y border-[#3b3e4b] py-[45px] mt-[45px]'>
+      <div className='border-y border-[#3b3e4b] sm:py-[45px] pt-[30px] pb-10 sm:mt-[45px] mt-[33px]'>
         <div className='max-w-[670px]'>
           <h3 className='text-xl'>Contact Information</h3>
-          <p className='text-[15px] mt-5 mb-6 text-[#FFFFFF8A] leading-[158%]'>
+          <p className='text-[15px] sm:mt-5 my-[15px] sm:mb-6 text-[#FFFFFF8A] leading-[158%]'>
             Your email address is used to verify we are working with a human and
             not a robot.
           </p>
           <div>
-            <label className='text-[15px] block mb-[6px]'>Email</label>
+            <label className='text-[15px] block mb-[6px] leading-[158%]'>Email</label>
             <div className='h-[46px] rounded-md bg-[#23243b] w-full relative border border-[#E93333]'>
               <input
                 className='text-[15px] placeholder:text-[#FFFFFF73] outline-none px-6 py-3 h-full w-full bg-transparent'
@@ -79,7 +79,7 @@ export default function PersonalArea() {
           <h3 className='mt-6 text-[15px] mb-6'>
             Email notifications from SkinsMonkey
           </h3>
-          <p className='text-[15px] mt-5 mb-6 text-[#FFFFFF8A] max-w-[465px] leading-[158%]'>
+          <p className='text-[15px] sm:mt-5 mt-[6px] sm:mb-6 mb-5 text-[#FFFFFF8A] max-w-[465px] leading-[158%]'>
             Receive updates from SkinsMonkey about your account and ongoing
             promotions. You can change the settings at any time.
           </p>
@@ -91,7 +91,7 @@ export default function PersonalArea() {
                 id='check'
               />
               <svg
-                className='absolute ml-[1px] top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2'
+                className='absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2'
                 width='9'
                 height='7'
                 viewBox='0 0 15 12'
@@ -126,7 +126,7 @@ export default function PersonalArea() {
                 checked
               />
               <svg
-                className='absolute ml-[1px] mt-[1px] top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2'
+                className='absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2'
                 width='9'
                 height='7'
                 viewBox='0 0 15 12'
@@ -153,10 +153,10 @@ export default function PersonalArea() {
           </div>
         </div>
       </div>
-      <div className='pt-[45px]'>
-        <h3 className='text-xl mb-[23px]'>Connected Accounts</h3>
-        <div className='flex items-center gap-[10px]'>
-          <div className='rounded-xl bg-[#181a32] p-4 flex items-center justify-between w-[379px]'>
+      <div className='sm:pt-[45px] pt-[26px]'>
+        <h3 className='text-xl sm:mb-[23px] mb-[26px]'>Connected Accounts</h3>
+        <div className='flex sm:items-center gap-[10px] flex-wrap sm:flex-row flex-col'>
+          <div className='rounded-xl bg-[#181a32] sm:p-4 p-2 pl-4 flex items-center justify-between sm:w-[379px] w-full xl:flex-none flex-1'>
             <div className='flex items-center gap-4'>
               <img src={assets.steam} alt='' width={22} height={10} />
               <span>Steam</span>
@@ -168,7 +168,7 @@ export default function PersonalArea() {
               Disconnect
             </a>
           </div>
-          <div className='rounded-xl bg-[#181a32] p-4 flex items-center justify-between w-[379px]'>
+          <div className='rounded-xl bg-[#181a32] sm:p-4 p-2 pl-4 flex items-center justify-between sm:w-[379px] w-full xl:flex-none flex-1'>
             <div className='flex items-center gap-4'>
               <img src='/images/diskord.svg' alt='' width={22} height={10} />
               <div>

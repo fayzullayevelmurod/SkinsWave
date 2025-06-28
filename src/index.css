@@ -58,7 +58,23 @@ body {
 .custom-checkbox input:checked + label::after {
   @apply opacity-100;
 }
+
+.custom-scroll::-webkit-scrollbar {
+  @apply w-[2px] rounded-md;
+}
+.custom-scroll::-webkit-scrollbar-thumb {
+  @apply bg-[#615FA6] w-[2px] rounded-md;
+}
+
+.main-container {
+  @apply max-w-[1794px] mx-auto;
+}
 /* media */
+@media (max-width: 1800px) {
+  .main-container {
+    @apply max-w-[100%] md:px-5 px-[15px];
+  }
+}
 @media (max-width: 1350px) {
   .container {
     @apply max-w-[100%] md:px-5 px-[15px];
@@ -78,11 +94,4 @@ body {
       0% 15%
     );
   }
-}
-
-.custom-scroll::-webkit-scrollbar {
-  @apply w-[2px] rounded-md;
-}
-.custom-scroll::-webkit-scrollbar-thumb {
-  @apply bg-[#615FA6] w-[2px] rounded-md;
 }

@@ -132,11 +132,15 @@ export default function TransactionTable() {
 
   const TradeIcons = () => (
     <div className='flex items-center space-x-2'>
-      <div className='w-10 h-[37px] flex items-center justify-center bg-[#494969] rounded-[3.04px]'>
+      <div className='md:w-10 w-[34px] h-[34px] md:h-[37px] flex items-center justify-center bg-[#494969] rounded-[3.04px]'>
         <img src='/images/user.svg' alt='user' />
       </div>
-      <img src='/images/arrow-right.svg' alt='arrow' />
-      <div className='w-10 h-[37px] flex items-center justify-center bg-[#494969] rounded-[3.04px]'>
+      <img
+        className='md:w-auto md:h-auto w-[15px]'
+        src='/images/arrow-right.svg'
+        alt='arrow'
+      />
+      <div className='md:w-10 w-[34px] h-[34px] md:h-[37px] flex items-center justify-center bg-[#494969] rounded-[3.04px]'>
         <img
           src='/images/knife2.svg'
           alt='knife'
@@ -146,7 +150,7 @@ export default function TransactionTable() {
           }}
         />
       </div>
-      <div className='w-10 h-[37px] flex items-center justify-center bg-[#494969] rounded-[3.04px]'>
+      <div className='md:w-10 w-[34px] h-[34px] md:h-[37px] flex items-center justify-center bg-[#494969] rounded-[3.04px]'>
         <img
           src='/images/gun.svg'
           alt='gun'
@@ -160,8 +164,8 @@ export default function TransactionTable() {
   );
 
   return (
-    <div className='mt-[38px]'>
-      <div className='overflow-x-auto'>
+    <div className='md:mt-[38px] mt-[18px]'>
+      <div className='w-full md:block hidden'>
         <table className='w-full'>
           <thead>
             <tr className='text-white opacity-[42%]'>
@@ -264,58 +268,169 @@ export default function TransactionTable() {
             ))}
           </tbody>
         </table>
+      </div>
 
-        {/* Pagination */}
-        <div className='flex items-center justify-center space-x-2 mt-11'>
-          <button className='bg-[#3F3D48] opacity-50 w-8 h-8 flex items-center justify-center text-white rounded cursor-pointer'>
-            <svg
-              width='8'
-              height='13'
-              viewBox='0 0 8 13'
-              fill='none'
-              xmlns='http://www.w3.org/2000/svg'
-              className='rotate-180'
-            >
-              <path
-                fillRule='evenodd'
-                clipRule='evenodd'
-                d='M7.071 7.071L1.414 12.728L0 11.314L4.95 6.364L0 1.414L1.414 0L7.071 5.657C7.25847 5.84453 7.36379 6.09884 7.36379 6.364C7.36379 6.62916 7.25847 6.88347 7.071 7.071Z'
-                fill='#BDBDBD'
-              />
-            </svg>
-          </button>
-          <button className='bg-[#4F5180] w-8 h-8 flex items-center justify-center text-white rounded cursor-pointer'>
-            1
-          </button>
-          <button className='bg-[#181E30] w-8 h-8 flex items-center justify-center text-white rounded cursor-pointer'>
-            2
-          </button>
-          <span className='bg-[#181E30] w-8 h-8 flex items-center justify-center text-white rounded cursor-pointer'>
-            ...
-          </span>
-          <button className='bg-[#181E30] w-8 h-8 flex items-center justify-center text-white rounded cursor-pointer'>
-            9
-          </button>
-          <button className='bg-[#181E30] w-8 h-8 flex items-center justify-center text-white rounded cursor-pointer'>
-            10
-          </button>
-          <button className='bg-[#181E30] w-8 h-8 flex items-center justify-center text-white rounded cursor-pointer'>
-            <svg
-              width='8'
-              height='13'
-              viewBox='0 0 8 13'
-              fill='none'
-              xmlns='http://www.w3.org/2000/svg'
-            >
-              <path
-                fillRule='evenodd'
-                clipRule='evenodd'
-                d='M7.071 7.071L1.414 12.728L0 11.314L4.95 6.364L0 1.414L1.414 0L7.071 5.657C7.25847 5.84453 7.36379 6.09884 7.36379 6.364C7.36379 6.62916 7.25847 6.88347 7.071 7.071Z'
-                fill='#fff'
-              />
-            </svg>
+      <div className='md:hidden block space-y-[15px]'>
+        <div>
+          <div className='flex border border-[#FFFFFF14]'>
+            <div className='bg-[#24243E] w-[128px] divide-y divide-[#36374d]'>
+              <div className='h-11 p-[15px] text-[#80808f] border-r border-[#FFFFFF14]'>
+                Type
+              </div>
+              <div className='h-11 p-[15px] text-[#80808f] border-r border-[#FFFFFF14]'>
+                Details
+              </div>
+              <div className='h-11 p-[15px] text-[#80808f] border-r border-[#FFFFFF14]'>
+                Status
+              </div>
+              <div className='h-11 p-[15px] text-[#80808f] border-r border-[#FFFFFF14]'>
+                Date
+              </div>
+            </div>
+            <div className='bg-translate flex-1 divide-y divide-[#36374d]'>
+              <div className='h-11 flex items-center px-7'>Deposit</div>
+              <div className='h-11 flex items-center px-7'>$ 50.44 </div>
+              <div className='h-11 flex items-center px-7'>
+                <div className='border rounded px-3 py-2 flex items-center gap-2 text-[13px] h-7 text-[#8D91CE] border-[#8D91CE] bg-[#8083B024]'>
+                  <img
+                    alt='New icon'
+                    class='w-[11px] h-[10px]'
+                    src='/images/star.svg'
+                  />
+                  <span className='leading-[100%]'>New</span>
+                </div>
+              </div>
+              <div className='h-11 py-[15px] px-7'>Type</div>
+            </div>
+          </div>
+          <button className='w-full py-[15px] text-sm bg-[#545785]'>
+            Show more
           </button>
         </div>
+        <div>
+          <div className='flex border border-[#FFFFFF14]'>
+            <div className='bg-[#24243E] w-[128px] divide-y divide-[#36374d]'>
+              <div className='h-11 p-[15px] text-[#80808f] border-r border-[#FFFFFF14]'>
+                Type
+              </div>
+              <div className='h-11 p-[15px] text-[#80808f] border-r border-[#FFFFFF14]'>
+                Details
+              </div>
+              <div className='h-11 p-[15px] text-[#80808f] border-r border-[#FFFFFF14]'>
+                Status
+              </div>
+              <div className='h-11 p-[15px] text-[#80808f] border-r border-[#FFFFFF14]'>
+                Date
+              </div>
+            </div>
+            <div className='bg-translate flex-1 divide-y divide-[#36374d]'>
+              <div className='h-11 flex items-center px-7'>Deposit</div>
+              <div className='h-11 flex items-center px-7 text-[#6AFF40]'>
+                + $ 50.44
+              </div>
+              <div className='h-11 flex items-center px-7'>
+                <div class='border rounded px-3 py-2 flex items-center gap-2 text-[13px] h-7 text-[#6AFF40] border-[#6AFF40] bg-[#17D10A26]'>
+                  <img
+                    alt='Completed icon'
+                    class='w-3 h-5'
+                    src='/images/green-check.svg'
+                  />
+                  <span>Completed</span>
+                </div>
+              </div>
+              <div className='h-11 py-[15px] px-7'>Type</div>
+            </div>
+          </div>
+          <button className='w-full py-[15px] text-sm bg-[#545785]'>
+            Show more
+          </button>
+        </div>
+        <div>
+          <div className='flex border border-[#FFFFFF14]'>
+            <div className='bg-[#24243E] w-[128px] divide-y divide-[#36374d]'>
+              <div className='h-11 p-[15px] text-[#80808f] border-r border-[#FFFFFF14]'>
+                Type
+              </div>
+              <div className='h-11 p-[15px] text-[#80808f] border-r border-[#FFFFFF14]'>
+                Details
+              </div>
+              <div className='h-11 p-[15px] text-[#80808f] border-r border-[#FFFFFF14]'>
+                Status
+              </div>
+              <div className='h-11 p-[15px] text-[#80808f] border-r border-[#FFFFFF14]'>
+                Date
+              </div>
+            </div>
+            <div className='bg-translate flex-1 divide-y divide-[#36374d]'>
+              <div className='h-11 flex items-center px-7'>Deposit</div>
+              <div className='h-11 flex items-center px-7 '>
+                <TradeIcons />
+              </div>
+              <div className='h-11 flex items-center px-7'>
+                <div class='border rounded px-3 py-2 flex items-center gap-2 text-[13px] h-7 bg-[#E12C2C38] border-[#E12C2C] text-[#FF4040]'>
+                  <img alt='Canceled icon' src='/images/red-x.svg' />
+                  <span>Canceled</span>
+                </div>
+              </div>
+              <div className='h-11 py-[15px] px-7'>Type</div>
+            </div>
+          </div>
+          <button className='w-full py-[15px] text-sm bg-[#545785]'>
+            Show more
+          </button>
+        </div>
+      </div>
+
+      {/* Pagination */}
+      <div className='flex items-center justify-center space-x-2 md:mt-11 mt-[30px]'>
+        <button className='bg-[#3F3D48] opacity-50 w-8 h-8 flex items-center justify-center text-white rounded cursor-pointer'>
+          <svg
+            width='8'
+            height='13'
+            viewBox='0 0 8 13'
+            fill='none'
+            xmlns='http://www.w3.org/2000/svg'
+            className='rotate-180'
+          >
+            <path
+              fillRule='evenodd'
+              clipRule='evenodd'
+              d='M7.071 7.071L1.414 12.728L0 11.314L4.95 6.364L0 1.414L1.414 0L7.071 5.657C7.25847 5.84453 7.36379 6.09884 7.36379 6.364C7.36379 6.62916 7.25847 6.88347 7.071 7.071Z'
+              fill='#BDBDBD'
+            />
+          </svg>
+        </button>
+        <button className='bg-[#4F5180] w-8 h-8 flex items-center justify-center text-white rounded cursor-pointer'>
+          1
+        </button>
+        <button className='bg-[#181E30] w-8 h-8 flex items-center justify-center text-white rounded cursor-pointer'>
+          2
+        </button>
+        <span className='bg-[#181E30] w-8 h-8 flex items-center justify-center text-white rounded cursor-pointer'>
+          ...
+        </span>
+        <button className='bg-[#181E30] w-8 h-8 flex items-center justify-center text-white rounded cursor-pointer'>
+          9
+        </button>
+        <button className='bg-[#181E30] w-8 h-8 flex items-center justify-center text-white rounded cursor-pointer'>
+          10
+        </button>
+        <button className='bg-[#181E30] w-8 h-8 flex items-center justify-center text-white rounded cursor-pointer'>
+          <svg
+            width='8'
+            height='13'
+            viewBox='0 0 8 13'
+            fill='none'
+            xmlns='http://www.w3.org/2000/svg'
+          >
+            <path
+              fillRule='evenodd'
+              clipRule='evenodd'
+              d='M7.071 7.071L1.414 12.728L0 11.314L4.95 6.364L0 1.414L1.414 0L7.071 5.657C7.25847 5.84453 7.36379 6.09884 7.36379 6.364C7.36379 6.62916 7.25847 6.88347 7.071 7.071Z'
+              fill='#fff'
+            />
+          </svg>
+        </button>
       </div>
     </div>
   );

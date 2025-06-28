@@ -8,11 +8,11 @@ export default function Transactions() {
 
   return (
     <div>
-      <div className='flex items-center justify-between'>
-        <h2 className='text-[25px] leading-[167%] font-normal font-GothamPro text-white'>
+      <div className='flex md:items-center justify-between md:gap-5 gap-[18px] md:flex-row flex-col '>
+        <h2 className='sm:text-[25px] text-xl sm:leading-[167%] font-normal font-GothamPro text-white'>
           Transactions
         </h2>
-        <div className='flex gap-11 items-center'>
+        <div className='flex gap-11 items-center md:w-fit w-full'>
           <CustomSelect
             label='Status'
             options={statusOptions}
@@ -23,7 +23,7 @@ export default function Transactions() {
             options={typeOptions}
             defaultOption='Type'
           />
-          <div className='w-[389px]'>
+          <div className='xl:w-[389px] sm:w-[250px] md:ml-0 ml-auto'>
             <Search />
           </div>
         </div>

@@ -3,6 +3,7 @@ import Header from '../layouts/Header';
 import Transactions from './Transactions';
 import Footer from '../layouts/Footer';
 import PersonalArea from './PersonalArea';
+import HeaderTwo from '../layouts/HeaderTwo';
 
 export default function Main() {
   const location = useLocation();
@@ -34,9 +35,9 @@ export default function Main() {
 
   return (
     <>
-      <Header />
-      <div className='flex items-stretch gap-3 max-w-[1570px] mx-auto mt-[71px]'>
-        <aside className='w-[262px] bg-[#0f1224] py-[47px]'>
+      <HeaderTwo />
+      <div className='flex lg:flex-row flex-col items-stretch gap-3 2xl:max-w-[1570px] 2xl:px-0 lg:px-5 mx-auto lg:mt-[71px] sm:mt-10 mt-5 mb-[37px]'>
+        <aside className='xl:min-w-[262px] min-w-[200px] bg-[#0f1224] xl:py-[47px] py-10 lg:block hidden'>
           <ul>
             {navItems.map((item) => (
               <li key={item.path}>
@@ -57,7 +58,7 @@ export default function Main() {
             ))}
           </ul>
         </aside>
-        <div className='flex-1 bg-[#0f1224] pt-[47px] px-[60px] pb-[54px]'>
+        <div className='flex-1 bg-[#0f1224] xl:pt-[47px] xl:px-[60px] xl:pb-[54px] lg:p-10 pt-5 pb-[54px] px-[15px]'>
           <Routes>
             <Route path='/transactions' element={<Transactions />} />
             <Route path='/personal' element={<PersonalArea />} />
