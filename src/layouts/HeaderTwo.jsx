@@ -1,13 +1,19 @@
-// className='flex items-center gap-2 text-white text-xs-base leading-[100%] bg-nav-link-gradient py-4 px-[34px] rounded-xl border-b-[2px] border-[#9882E0]
 import { useState, useEffect, useRef } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import assets from '../assets';
-import { Link } from 'react-router-dom';
 
+// Reusable HeaderTwo component with conditional active link styling
 export default function HeaderTwo() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState('$ USD');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const location = useLocation();
+
+  // Define active class for navigation links
+  const activeClass =
+    'flex items-center gap-2 text-white text-xs-base leading-[100%] bg-nav-link-gradient py-4 px-[34px] rounded-xl border-b-[2px] border-[#9882E0]';
+  const inactiveClass = 'text-[#7D7D9E] hover:text-white duration-300';
 
   // Toggle dropdown visibility
   const handleToggleDropdown = () => {
@@ -20,7 +26,7 @@ export default function HeaderTwo() {
     setIsDropdownOpen(false);
   };
 
-  // Toggle mobile menu visibility and manage body overflow
+  // Toggle mobile menu visibility
   const handleToggleMobileMenu = () => {
     setIsMobileMenuOpen((prev) => !prev);
   };
@@ -52,46 +58,43 @@ export default function HeaderTwo() {
     <header className='py-4'>
       <div className='main-container flex items-center justify-between gap-4'>
         <h2 className='text-white text-xl font-normal'>SkinsWave</h2>
-        <ul className='xl:gap-[70px] gap-5 lg:flex items-center hidden'>
+        <ul className='xl:gap-[50px] gap-5 lg:flex items-center hidden'>
           <li>
-            <a
-              className='text-[#7D7D9E] hover:text-white duration-300'
-              href='#!'
+            <Link
+              className={
+                location.pathname === '/home' ? activeClass : inactiveClass
+              }
+              to='/home'
             >
               <span>Home</span>
-            </a>
+            </Link>
           </li>
-          <li className='xl:-ml-9'>
+          <li>
             <Link
-              className='text-[#7D7D9E] hover:text-white duration-300'
+              className={
+                location.pathname === '/trade-skins'
+                  ? activeClass
+                  : inactiveClass
+              }
               to='/trade-skins'
             >
               Trade Skins
             </Link>
           </li>
           <li>
-            <a
-              className='text-[#7D7D9E] hover:text-white duration-300'
-              href='#!'
-            >
+            <a className={inactiveClass} href='#!'>
               About Us
             </a>
           </li>
           <li>
-            <a
-              className='text-[#7D7D9E] hover:text-white duration-300'
-              href='#!'
-            >
+            <Link className={inactiveClass} to='#!'>
               Skin Exchange
-            </a>
+            </Link>
           </li>
           <li>
-            <a
-              className='text-[#7D7D9E] hover:text-white duration-300'
-              href='#!'
-            >
+            <Link className={inactiveClass} to='#!'>
               Reviews
-            </a>
+            </Link>
           </li>
         </ul>
         <div className='flex items-center xl:gap-6 gap-3'>
@@ -103,7 +106,7 @@ export default function HeaderTwo() {
               <img
                 className='bg-white rounded-full'
                 src={assets.usdFlag}
-                alt=''
+                alt='Currency flag'
               />
               <span>{selectedCurrency}</span>
               <img
@@ -111,7 +114,7 @@ export default function HeaderTwo() {
                   isDropdownOpen ? 'rotate-180' : ''
                 }`}
                 src={assets.arrowDown}
-                alt=''
+                alt='Dropdown arrow'
               />
             </div>
             <div
@@ -140,22 +143,22 @@ export default function HeaderTwo() {
             </div>
           </div>
           <button className='sm:flex hidden rounded-full w-[38px] h-[38px] items-center justify-center bg-[#3E3D7275] relative'>
-            <div class='bg-[linear-gradient(180deg,_#FD9C00_0%,_#FFD301_100%)] w-2 h-2 rounded-full absolute top-[2px] right-[1px]'></div>
-            <img src='/images/ball.svg' alt='ball' />
+            <div className='bg-[linear-gradient(180deg,_#FD9C00_0%,_#FFD301_100%)] w-2 h-2 rounded-full absolute top-[2px] right-[1px]'></div>
+            <img src='/images/ball.svg' alt='Notification icon' />
           </button>
           <div className='sm:flex hidden items-center p-[3px] rounded-[38px] bg-[#3E3D7275] gap-2 pl-4'>
             <span>
               $ 7 222 <span className='text-[#FFFFFF4F]'>.00</span>
             </span>
             <button className='w-8 h-8 rounded-full bg-[#615FA6] flex items-center justify-center'>
-              <img src='/images/plus.svg' alt='' />
+              <img src='/images/plus.svg' alt='Add funds icon' />
             </button>
           </div>
           <div className='sm:block hidden w-[37px] h-[37px] rounded-full border-[2px] border-[#615FA6]'>
             <img
               className='w-full h-full object-cover'
               src='/images/user.png'
-              alt=''
+              alt='User avatar'
             />
           </div>
           <button
@@ -165,7 +168,7 @@ export default function HeaderTwo() {
             <img
               className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mt-[2px]'
               src='/images/hamburger.svg'
-              alt=''
+              alt='Menu icon'
             />
           </button>
         </div>
@@ -179,14 +182,14 @@ export default function HeaderTwo() {
         <div className='flex items-center justify-between py-[10px] px-[15px]'>
           <h2 className='text-white text-base font-normal'>SkinsWave</h2>
           <button onClick={handleToggleMobileMenu}>
-            <img src='/images/close.svg' alt='' />
+            <img src='/images/close.svg' alt='Close menu icon' />
           </button>
         </div>
         <ul className='py-8 px-[15px]'>
           <li>
-            <a
+            <Link
               className='flex items-center justify-between text-xs-base text-white py-6 border-b border-[#D9D9D936]'
-              href='#!'
+              to='/home'
             >
               <span>Home</span>
               <svg
@@ -203,12 +206,12 @@ export default function HeaderTwo() {
                   fill='#38383B'
                 />
               </svg>
-            </a>
+            </Link>
           </li>
           <li>
-            <a
+            <Link
               className='flex items-center justify-between text-xs-base text-white py-6 border-b border-[#D9D9D936]'
-              href='#!'
+              to='#!'
             >
               <span>Trade Skins</span>
               <svg
@@ -225,12 +228,12 @@ export default function HeaderTwo() {
                   fill='#38383B'
                 />
               </svg>
-            </a>
+            </Link>
           </li>
           <li>
-            <a
+            <Link
               className='flex items-center justify-between text-xs-base text-white py-6 border-b border-[#D9D9D936]'
-              href='#!'
+              to='#!'
             >
               <span
                 className='text-transparent bg-clip-text bg-text-gradient'
@@ -252,12 +255,12 @@ export default function HeaderTwo() {
                   fill='#FFD301'
                 />
               </svg>
-            </a>
+            </Link>
           </li>
           <li>
-            <a
+            <Link
               className='flex items-center justify-between text-xs-base text-white py-6 border-b border-[#D9D9D936]'
-              href='#!'
+              to='#!'
             >
               <span>Skin Exchange</span>
               <svg
@@ -274,12 +277,12 @@ export default function HeaderTwo() {
                   fill='#38383B'
                 />
               </svg>
-            </a>
+            </Link>
           </li>
           <li>
-            <a
+            <Link
               className='flex items-center justify-between text-xs-base text-white py-6 border-b border-[#D9D9D936]'
-              href='#!'
+              to='#!'
             >
               <span>Reviews</span>
               <svg
@@ -296,12 +299,12 @@ export default function HeaderTwo() {
                   fill='#38383B'
                 />
               </svg>
-            </a>
+            </Link>
           </li>
           <li>
-            <a
+            <Link
               className='flex items-center justify-between text-xs-base text-white py-6 border-b border-[#D9D9D936]'
-              href='#!'
+              to='#!'
             >
               <span>Setting</span>
               <svg
@@ -318,58 +321,58 @@ export default function HeaderTwo() {
                   fill='#38383B'
                 />
               </svg>
-            </a>
+            </Link>
           </li>
         </ul>
         <div className='px-[15px] pt-1 relative z-10'>
           <div className='h-[266px] bg-[#B3D3ED] -z-10 min-w-[440px] blur-[300px] opacity-[0.18] absolute bottom-[-89px] left-1/2 -translate-x-1/2'></div>
-          <a
+          <Link
             className='flex items-center w-full gap-[10px] h-[65px] text-[17px] justify-center text-white bg-btn-bg bg-no-repeat bg-[length:100%_100%]'
-            href='#!'
+            to='#!'
           >
-            <img src={assets.steamIcon} alt='' width={29} />
+            <img src={assets.steamIcon} alt='Steam icon' width={29} />
             <span>Sign in via Steam</span>
-          </a>
+          </Link>
           <span className='text-[17px] opacity-50 mb-[23px] mt-[42px]'>
             Social Media
           </span>
           <div className='flex gap-[5px] justify-between'>
-            <a
+            <Link
               className='w-[49px] h-[49px] flex items-center rounded-[4px] justify-center bg-[#272c39]'
-              href='#!'
+              to='#!'
             >
-              <img src='/images/steam.svg' alt='' />
-            </a>
-            <a
+              <img src='/images/steam.svg' alt='Steam social icon' />
+            </Link>
+            <Link
               className='w-[49px] h-[49px] flex items-center rounded-[4px] justify-center bg-[#272c39]'
-              href='#!'
+              to='#!'
             >
-              <img src='/images/insta.svg' alt='' />
-            </a>
-            <a
+              <img src='/images/insta.svg' alt='Instagram social icon' />
+            </Link>
+            <Link
               className='w-[49px] h-[49px] flex items-center rounded-[4px] justify-center bg-[#272c39]'
-              href='#!'
+              to='#!'
             >
-              <img src='/images/tik-tok.svg' alt='' />
-            </a>
-            <a
+              <img src='/images/tik-tok.svg' alt='TikTok social icon' />
+            </Link>
+            <Link
               className='w-[49px] h-[49px] flex items-center rounded-[4px] justify-center bg-[#272c39]'
-              href='#!'
+              to='#!'
             >
-              <img src='/images/x.svg' alt='' />
-            </a>
-            <a
+              <img src='/images/x.svg' alt='X social icon' />
+            </Link>
+            <Link
               className='w-[49px] h-[49px] flex items-center rounded-[4px] justify-center bg-[#272c39]'
-              href='#!'
+              to='#!'
             >
-              <img src='/images/diskord.svg' alt='' />
-            </a>
-            <a
+              <img src='/images/diskord.svg' alt='Discord social icon' />
+            </Link>
+            <Link
               className='w-[49px] h-[49px] flex items-center rounded-[4px] justify-center bg-[#272c39]'
-              href='#!'
+              to='#!'
             >
-              <img src='/images/facebook.svg' alt='' />
-            </a>
+              <img src='/images/facebook.svg' alt='Facebook social icon' />
+            </Link>
           </div>
         </div>
       </div>

@@ -53,7 +53,7 @@ export default {
       },
       dropShadow: {
         "skin-shd": "-1.23px 17px 14px rgba(0, 0, 0, 0.32)",
-        'product-shd': "-6px 13px 12px rgba(0, 0, 0, 0.47)"
+        'product-shd': "-6px 13px 12px rgba(0, 0, 0, 0.47)",
       }
     },
   },

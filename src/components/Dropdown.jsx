@@ -13,7 +13,7 @@ const Dropdown = ({ options, defaultOption }) => {
   return (
     <div className='relative'>
       <div
-        className={`flex items-center gap-1 py-[10px] px-[14px] ${isOpen && 'bg-[#615FA6]'} rounded-[4px] cursor-pointer select-none`}
+        className={`flex items-center gap-1 sm:text-[15px] text-sm py-[10px] px-[14px] ${isOpen && 'bg-[#615FA6]'} rounded-[4px] cursor-pointer select-none`}
         onClick={() => setIsOpen(!isOpen)}
       >
         <img
@@ -48,7 +48,7 @@ const Dropdown = ({ options, defaultOption }) => {
         {options.map((option) => (
           <div
             key={option.id}
-            className='flex items-center gap-[6px] cursor-pointer hover:opacity-80'
+            className='flex items-center gap-[6px] sm:text-[15px] text-sm cursor-pointer hover:opacity-80'
             onClick={() => handleSelect(option)}
           >
             <img src={option.imageSrc} alt={`${option.label} icon`} />
