@@ -21,9 +21,8 @@ const Accordion = ({ title, children }) => {
           height='9'
           viewBox='0 0 9 5'
           fill='none'
-          className={`transform transition-transform ${
-            isOpen ? 'rotate-180' : ''
-          }`}
+          className={`transform transition-transform ${isOpen ? 'rotate-180' : ''
+            }`}
           xmlns='http://www.w3.org/2000/svg'
         >
           <path
@@ -66,7 +65,7 @@ const SkinCard = ({ imageSrc, title, price }) => (
 );
 
 // Reusable OfferSection component for left and right offer panels
-const OfferSection = ({ title, total, skins, handleOpenFilter }) => (
+const OfferSection = ({ title, total, skins, handleOpenFilter, handleOpenModal }) => (
   <div className='flex-1'>
     <div className='mb-[18px] rounded-[9px] overflow-hidden bg-[#212044] md:block hidden'>
       <div className='flex items-center justify-between p-[18px] h-[50px]'>
@@ -91,7 +90,7 @@ const OfferSection = ({ title, total, skins, handleOpenFilter }) => (
           >
             <img src='/images/settings.svg' alt='' />
           </button>
-          <div className='xl:w-[389px] md:w-full flex-1'>
+          <div className='xl:w-[389px] w-full flex-1'>
             <Search className='sm:!bg-[#393959] !bg-[#303047] h-[30px]' />
           </div>
         </div>
@@ -156,7 +155,7 @@ const OfferSection = ({ title, total, skins, handleOpenFilter }) => (
         </button>
       </div>
       <div className='md:py-5 py-3 md:px-[14px] px-[5px] flex flex-wrap bg-skin-card gap-[10px] custom-scroll overflow-y-auto max-h-[785px]'>
-        <div className='bg-product-card-bg flex-[150px] bg-[length:100%_100%] bg-no-repeat pb-[14px] h-fit px-3'>
+        <div onClick={handleOpenModal} className='bg-product-card-bg flex-[150px] bg-[length:100%_100%] bg-no-repeat pb-[14px] h-fit px-3'>
           <div className='min-h-[128px] relative z-10 flex items-center justify-center'>
             <img
               className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 -z-10'
@@ -204,7 +203,7 @@ const OfferSection = ({ title, total, skins, handleOpenFilter }) => (
             />
           </div>
         </div>
-        <div className='bg-product-card-bg flex-[150px] bg-[length:100%_100%] bg-no-repeat pb-[14px] h-fit px-3'>
+        <div onClick={handleOpenModal} className='bg-product-card-bg flex-[150px] bg-[length:100%_100%] bg-no-repeat pb-[14px] h-fit px-3'>
           <div className='min-h-[128px] relative z-10 flex items-center justify-center'>
             <img
               className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 -z-10'
@@ -252,7 +251,7 @@ const OfferSection = ({ title, total, skins, handleOpenFilter }) => (
             />
           </div>
         </div>
-        <div className='bg-product-card-bg flex-[150px] bg-[length:100%_100%] bg-no-repeat pb-[14px] h-fit px-3'>
+        <div onClick={handleOpenModal} className='bg-product-card-bg flex-[150px] bg-[length:100%_100%] bg-no-repeat pb-[14px] h-fit px-3'>
           <div className='min-h-[128px] relative z-10 flex items-center justify-center'>
             <img
               className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 -z-10'
@@ -300,7 +299,7 @@ const OfferSection = ({ title, total, skins, handleOpenFilter }) => (
             />
           </div>
         </div>
-        <div className='bg-product-card-bg flex-[150px] bg-[length:100%_100%] bg-no-repeat pb-[14px] h-fit px-3 relative'>
+        <div onClick={handleOpenModal} className='bg-product-card-bg flex-[150px] bg-[length:100%_100%] bg-no-repeat pb-[14px] h-fit px-3 relative'>
           <div className='space-y-[3px] absolute top-[6px] right-1'>
             <img src='/images/status-logo.svg' alt='' width={19} height={19} />
             <img src='/images/status-logo.svg' alt='' width={19} height={19} />
@@ -350,7 +349,7 @@ const OfferSection = ({ title, total, skins, handleOpenFilter }) => (
   </div>
 );
 
-const OfferSectionKnife = () => (
+const OfferSectionKnife = ({handleOpenModal}) => (
   <div className='rounded-[9px] overflow-hidden bg-[#212044]'>
     <div className='flex items-center justify-between py-[10px] px-[14px] flex-wrap gap-y-5'>
       <div className='xl:w-[389px] w-full flex-1'>
@@ -420,7 +419,7 @@ const OfferSectionKnife = () => (
         <h3 className='text-[15px] my-[19px]'>Истекает: 19.06.2025, 12:00:00</h3>
         <p className='text-[#FFFFFF99]'>После этого разблокируется возможность вывода в инвентарь</p>
       </div> */}
-      <div className='bg-product-card-bg bg-[length:100%_100%] flex-[150px] bg-no-repeat pb-[14px] h-fit px-3'>
+      <div onClick={handleOpenModal} className='bg-product-card-bg bg-[length:100%_100%] flex-[150px] bg-no-repeat pb-[14px] h-fit px-3'>
         <div className='min-h-[128px] relative z-10 flex items-center justify-center'>
           <img
             className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 -z-10'
@@ -468,7 +467,7 @@ const OfferSectionKnife = () => (
           />
         </div>
       </div>
-      <div className='bg-product-card-bg bg-[length:100%_100%] flex-[150px] bg-no-repeat pb-[14px] h-fit px-3'>
+      <div onClick={handleOpenModal} className='bg-product-card-bg bg-[length:100%_100%] flex-[150px] bg-no-repeat pb-[14px] h-fit px-3'>
         <div className='min-h-[128px] relative z-10 flex items-center justify-center'>
           <img
             className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 -z-10'
@@ -516,7 +515,7 @@ const OfferSectionKnife = () => (
           />
         </div>
       </div>
-      <div className='bg-product-card-bg bg-[length:100%_100%] flex-[150px] bg-no-repeat pb-[14px] h-fit px-3 relative'>
+      <div onClick={handleOpenModal} className='bg-product-card-bg bg-[length:100%_100%] flex-[150px] bg-no-repeat pb-[14px] h-fit px-3 relative'>
         <div className='rounded-[4px] bg-[#615FA638] p-[10px] flex gap-2 items-center absolute top-[6px] right-2 z-50 cursor-pointer'>
           <svg
             width='12'
@@ -579,7 +578,7 @@ const OfferSectionKnife = () => (
           />
         </div>
       </div>
-      <div className='bg-product-card-bg bg-[length:100%_100%] flex-[150px] bg-no-repeat pb-[14px] h-fit px-3 relative'>
+      <div onClick={handleOpenModal} className='bg-product-card-bg bg-[length:100%_100%] flex-[150px] bg-no-repeat pb-[14px] h-fit px-3 relative'>
         <div className='space-y-[3px] absolute top-[6px] right-1'>
           <img src='/images/status-logo.svg' alt='' width={19} height={19} />
           <img src='/images/status-logo.svg' alt='' width={19} height={19} />
@@ -631,9 +630,15 @@ const OfferSectionKnife = () => (
 // Main TradeSkins component
 const TradeSkins = () => {
   const [openFilter, setOpenFilter] = useState(false);
+  const [openModal, setOpenModal] = useState(false)
+
   const handleOpenFilter = () => {
     setOpenFilter(!openFilter);
   };
+
+  const handleOpenModal = () => {
+    setOpenModal(!openModal)
+  }
   // Skin data with varied titles and prices for realism
   const skins = [
     {
@@ -704,13 +709,13 @@ const TradeSkins = () => {
             total='$5,585,555'
             skins={skins}
             handleOpenFilter={handleOpenFilter}
+            handleOpenModal={handleOpenModal}
           />
 
           {/* midle sec */}
           <div
-            className={`min-w-[272px] sm:rounded-[9px] overflow-hidden lg:block hidden sm:relative fixed top-0 sm:w-auto sm:h-auto sm:bg-none z-[100] overflow-y-auto bg-skin-card left-0 w-full h-full  ${
-              openFilter && '!block'
-            }`}
+            className={`min-w-[272px] sm:rounded-[9px] overflow-hidden lg:block hidden sm:relative fixed top-0 sm:w-auto sm:h-auto sm:bg-none z-[100] overflow-y-auto bg-skin-card left-0 w-full h-full  ${openFilter && '!block'
+              }`}
           >
             <div className='flex items-center justify-between bg-[#212044] p-[18px]'>
               <div className='flex items-center gap-2'>
@@ -865,7 +870,7 @@ const TradeSkins = () => {
                 ))}
               </div>
             </div>
-            <OfferSectionKnife />
+            <OfferSectionKnife handleOpenModal={handleOpenModal} />
           </div>
 
           <div className='sm:hidden flex mx-[6px] py-[13px] px-[10px] bg-text-gradient justify-between items-center rounded-[4px]'>
@@ -898,7 +903,7 @@ const TradeSkins = () => {
         </div>
         <Footer />
       </div>
-      {/* <Modal /> */}
+      <Modal onClose={handleOpenModal} isOpen={openModal} />
     </>
   );
 };

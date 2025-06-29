@@ -40,6 +40,9 @@ export default {
         'skin-child-card': "linear-gradient(180deg, #14182B 0%, rgba(41, 27, 90, 0.7) 44.71%, #14182B 100%)",
         "tooltip-bg": "url(/images/tooltip-bg.png)",
       },
+      backgroundColor: {
+        'custom-dark': 'rgba(10, 13, 28, 0.86)',
+      },
       boxShadow: {
         'img-shadow': "0px 0px 8.7px 0px #9882E0B0",
         'fire-shadow': "0px 3.8px 14.46px 0px #9A2E1B",
