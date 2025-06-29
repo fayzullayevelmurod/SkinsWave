@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Footer from '../layouts/Footer';
 import Search from '../components/Search';
 import Dropdown from '../components/Dropdown';
 import HeaderTwo from '../layouts/HeaderTwo';
 import Modal from '../components/Modal';
 import Basket from '../components/Basket';
+import { createPortal } from 'react-dom';
 
 // Reusable Accordion component with toggle functionality
 const Accordion = ({ title, children }) => {
@@ -66,598 +67,807 @@ const SkinCard = ({ imageSrc, title, price }) => (
   </div>
 );
 
-// Reusable OfferSection component for left and right offer panels
+// Tooltip component
+// components/TooltipInfo.js
+export const TooltipInfo = React.forwardRef((props, ref) => {
+  return (
+    <div
+      ref={ref}
+      className='tooltip bg-[#09083C38] pt-[29px] pb-[27px] px-[23px] rounded-[4px] absolute z-[1000] w-[556px] shadow-[6px_29px_60.9px_0px_#00000042] backdrop-blur-[56px]'
+      style={{ display: 'none' }}
+    >
+      <h3 className='text-[#B292FF] text-[15px]'>
+        Предмет заблокирован в Steam
+      </h3>
+      <h3 className='text-[15px] my-[19px]'>Истекает: 19.06.2025, 12:00:00</h3>
+      <p className='text-[#FFFFFF99]'>
+        После этого разблокируется возможность вывода в инвентарь
+      </p>
+    </div>
+  );
+});
+
+// ProductCard component
+
 const OfferSection = ({
   title,
   total,
   skins,
   handleOpenFilter,
   handleOpenModal,
-}) => (
-  <div className='flex-1'>
-    <div className='mb-[18px] rounded-[9px] overflow-hidden bg-[#212044] md:block hidden'>
-      <div className='flex items-center justify-between p-[18px] h-[50px]'>
-        <div className='flex items-center gap-2'>
-          <img src='/images/pistol.svg' alt='Pistol icon' />
-          <span>{title}</span>
-        </div>
-        <span>{total}</span>
-      </div>
-      <div className='p-[15px] pb-5 md:flex flex-wrap gap-3 bg-skin-card hidden'>
-        {skins.map((skin, index) => (
-          <SkinCard key={index} {...skin} />
-        ))}
-      </div>
+}) => {
+  const [activeTooltip, setActiveTooltip] = useState(null); // Track which product shows tooltip
+  const tooltipRef = useRef(null); // Reference to the tooltip element
+  const productRefs = useRef([]); // References to blocked product elements
+
+  // Handle hover/focus to show tooltip
+  const handleTooltipToggle = (index) => {
+    setActiveTooltip(index);
+  };
+
+  // Handle mouse leave/focus out to hide tooltip
+  const handleTooltipHide = () => {
+    setActiveTooltip(null);
+  };
+
+  // Dynamic tooltip positioning
+  useEffect(() => {
+    if (
+      activeTooltip === null ||
+      !tooltipRef.current ||
+      !productRefs.current[activeTooltip]
+    )
+      return;
+
+    const tooltip = tooltipRef.current;
+    const product = productRefs.current[activeTooltip];
+    const productRect = product.getBoundingClientRect();
+    const tooltipRect = tooltip.getBoundingClientRect();
+    const viewportWidth = window.innerWidth;
+
+    // Default: position tooltip 60px to the left of the product
+    let leftPosition = productRect.left - tooltipRect.width - 60;
+
+    // Check if tooltip overflows on the left side of the viewport
+    if (leftPosition < 0) {
+      // Reposition to the right side of the product
+      leftPosition = productRect.right + 60;
+    }
+
+    // Ensure tooltip doesn't overflow on the right side
+    if (leftPosition + tooltipRect.width > viewportWidth) {
+      leftPosition = productRect.left - tooltipRect.width - 60; // Fallback to left if right overflows too
+    }
+
+    // Apply dynamic positioning
+    tooltip.style.left = `${leftPosition}px`;
+    // tooltip.style.top = `${productRect.top}px`;
+    tooltip.style.top = `${productRect.top - 130}px`;
+    tooltip.style.display = 'block';
+  }, [activeTooltip]);
+
+  // Hide tooltip when not active
+  useEffect(() => {
+    if (activeTooltip === null && tooltipRef.current) {
+      tooltipRef.current.style.display = 'none';
+    }
+  }, [activeTooltip]);
+
+  // Tooltip component to be rendered via portal
+  const Tooltip = () => (
+    <div
+      ref={tooltipRef}
+      className='tooltip bg-[#09083C38] pt-[29px] pb-[27px] px-[23px] rounded-[4px] absolute z-[1000] w-[556px] shadow-[6px_29px_60.9px_0px_#00000042] backdrop-blur-[56px]'
+      style={{ display: 'none' }}
+    >
+      <h3 className='text-[#B292FF] text-[15px]'>
+        Предмет заблокирован в Steam
+      </h3>
+      <h3 className='text-[15px] my-[19px]'>Истекает: 19.06.2025, 12:00:00</h3>
+      <p className='text-[#FFFFFF99]'>
+        После этого разблокируется возможность вывода в инвентарь
+      </p>
     </div>
-    <div className='sm:rounded-[9px] overflow-hidden sm:bg-[#212044] bg-skin-card'>
-      <div className='flex sm:flex-wrap sm:bg-[#212044] sm:flex-row flex-row-reverse gap-y-5 items-center justify-between py-[10px] px-[14px]'>
-        <div className='flex gap-1 xl:w-[389px] md:w-full md:flex-1'>
-          <button
-            className='sm:hidden w-[33px] h-[33px] bg-[#303047] rounded-[4px] flex items-center justify-center'
-            onClick={handleOpenFilter}
-          >
-            <img src='/images/settings.svg' alt='' />
-          </button>
-          <div className='md:w-full'>
+  );
+
+  return (
+    <>
+      {createPortal(<Tooltip />, document.body)}
+      <div className='flex-1 relative'>
+        <div className='mb-[18px] rounded-[9px] overflow-hidden bg-[#212044] md:block hidden'>
+          <div className='flex items-center justify-between p-[18px] h-[50px]'>
+            <div className='flex items-center gap-2'>
+              <img src='/images/pistol.svg' alt='Pistol icon' />
+              <span>{title}</span>
+            </div>
+            <span>{total}</span>
+          </div>
+          <div className='p-[15px] pb-5 md:flex flex-wrap gap-3 bg-skin-card hidden'>
+            {skins.map((skin, index) => (
+              <SkinCard key={index} {...skin} />
+            ))}
+          </div>
+        </div>
+        <div className='sm:rounded-[9px] overflow-hidden sm:bg-[#212044] bg-skin-card relative'>
+          <div className='flex sm:flex-wrap sm:bg-[#212044] sm:flex-row flex-row-reverse gap-y-5 items-center justify-between py-[10px] px-[14px]'>
+            <div className='flex gap-1 xl:w-[389px] md:w-full md:flex-1'>
+              <button
+                className='sm:hidden w-[33px] h-[33px] bg-[#303047] rounded-[4px] flex items-center justify-center'
+                onClick={handleOpenFilter}
+              >
+                <img src='/images/settings.svg' alt='Filter icon' />
+              </button>
+              <div className='md:w-full'>
+                <Search className='sm:!bg-[#393959] !bg-[#303047] h-[30px]' />
+              </div>
+            </div>
+            <div className='flex items-center sm:gap-6 gap-1 xl:w-fit sm:w-full justify-between'>
+              <div className='flex sm:gap-6 gap-1 sm:flex-row flex-row-reverse'>
+                <Dropdown
+                  options={[
+                    {
+                      id: 'sort-1',
+                      label: 'Price: Max',
+                      imageSrc: '/images/sort-1.svg',
+                    },
+                    {
+                      id: 'sort-2',
+                      label: 'Price: Min',
+                      imageSrc: '/images/sort-2.svg',
+                    },
+                    {
+                      id: 'sort-3',
+                      label: 'Float: Max',
+                      imageSrc: '/images/sort-1.svg',
+                    },
+                    {
+                      id: 'sort-4',
+                      label: 'Float: Min',
+                      imageSrc: '/images/sort-2.svg',
+                    },
+                  ]}
+                  defaultOption={{
+                    id: 'sort-0',
+                    label: 'Relevance',
+                    imageSrc: '/images/lines.svg',
+                  }}
+                />
+                <Dropdown
+                  options={[
+                    {
+                      id: 'sort-1',
+                      label: 'CS2',
+                      imageSrc: '/images/fors.svg',
+                    },
+                    {
+                      id: 'sort-2',
+                      label: 'CS:GO',
+                      imageSrc: '/images/fors.svg',
+                    },
+                  ]}
+                  defaultOption={{
+                    id: 'sort-0',
+                    label: 'CS2',
+                    imageSrc: '/images/fors.svg',
+                  }}
+                />
+              </div>
+              <button className='w-[33px] h-[31px] rounded-[4px] items-center justify-center bg-[#615FA6] sm:flex hidden'>
+                <img src='/images/load.svg' alt='Load icon' />
+              </button>
+            </div>
+            <button className='cursor-pointer sm:hidden block'>
+              <img src='/images/load.svg' alt='Load icon' />
+            </button>
+          </div>
+          <div className='md:py-5 py-3 md:px-[14px] px-[5px] flex flex-wrap bg-skin-card gap-[10px] custom-scroll overflow-y-auto max-h-[785px]'>
+            <div
+              onClick={handleOpenModal}
+              className='bg-product-card-bg flex-[150px] bg-[length:100%_100%] bg-no-repeat pb-[14px] h-fit px-3'
+            >
+              <div className='min-h-[128px] relative z-10 flex items-center justify-center'>
+                <img
+                  className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 -z-10'
+                  alt='Skin background'
+                  width='77'
+                  height='77'
+                  src='/images/skin-bg.png'
+                />
+                <img
+                  className='drop-shadow-product-shd'
+                  src='/images/product-1.png'
+                  alt='product'
+                />
+              </div>
+              <h3 className='text-[15px]'>MP5-SD</h3>
+              <span className='text-[#B292FF] text-[13px] mt-[10px] mb-4'>
+                from $332.59
+              </span>
+              <div className='relative'>
+                <div className='grid grid-cols-9 gap-[2px] pb-1'>
+                  {[
+                    '#4FCD33',
+                    '#76CD33',
+                    '#A4CD33',
+                    '#CDC833',
+                    '#ECE636',
+                    '#FFF600',
+                    '#FFD400',
+                    '#FFAE00',
+                    '#FF9000',
+                  ].map((color, index) => (
+                    <div
+                      key={index}
+                      className='h-[4px] w-full'
+                      style={{ backgroundColor: color }}
+                    />
+                  ))}
+                </div>
+                <img
+                  className='cursor-pointer absolute -bottom-[3px] right-[52px]'
+                  src='/images/arrow.svg'
+                  alt='Trade lock indicator'
+                  width={11}
+                  height={11}
+                />
+              </div>
+            </div>
+            <div
+              onClick={handleOpenModal}
+              className='bg-product-card-bg flex-[150px] bg-[length:100%_100%] bg-no-repeat pb-[14px] h-fit px-3'
+            >
+              <div className='min-h-[128px] relative z-10 flex items-center justify-center'>
+                <img
+                  className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 -z-10'
+                  alt='Skin background'
+                  width='77'
+                  height='77'
+                  src='/images/skin-bg.png'
+                />
+                <img
+                  className='drop-shadow-product-shd'
+                  src='/images/product-1.png'
+                  alt='product'
+                />
+              </div>
+              <h3 className='text-[15px]'>MP5-SD</h3>
+              <span className='text-[#B292FF] text-[13px] mt-[10px] mb-4'>
+                from $332.59
+              </span>
+              <div className='relative'>
+                <div className='grid grid-cols-9 gap-[2px] pb-1'>
+                  {[
+                    '#4FCD33',
+                    '#76CD33',
+                    '#A4CD33',
+                    '#CDC833',
+                    '#ECE636',
+                    '#FFF600',
+                    '#FFD400',
+                    '#FFAE00',
+                    '#FF9000',
+                  ].map((color, index) => (
+                    <div
+                      key={index}
+                      className='h-[4px] w-full'
+                      style={{ backgroundColor: color }}
+                    />
+                  ))}
+                </div>
+                <img
+                  className='cursor-pointer absolute -bottom-[3px] right-[52px]'
+                  src='/images/arrow.svg'
+                  alt='Trade lock indicator'
+                  width={11}
+                  height={11}
+                />
+              </div>
+            </div>
+            {/* Blocked Product */}
+            <div
+              ref={(el) => (productRefs.current[0] = el)} // Assign ref to blocked product
+              className='bg-block-bg bg-[length:100%_100%] flex-[150px] bg-no-repeat pb-[14px] h-fit px-3 relative'
+            >
+              <div
+                className='rounded-[4px] bg-[#615FA638] p-[10px] flex gap-2 items-center absolute top-[6px] right-2 z-50 cursor-pointer'
+                onMouseEnter={() => handleTooltipToggle(0)}
+                onMouseLeave={handleTooltipHide}
+                onFocus={() => handleTooltipToggle(0)}
+                onBlur={handleTooltipHide}
+              >
+                <svg
+                  width='12'
+                  height='16'
+                  viewBox='0 0 12 16'
+                  fill='none'
+                  xmlns='http://www.w3.org/2000/svg'
+                >
+                  <path
+                    d='M11.6667 6H10.6667V4.66666C10.6667 2.09344 8.57325 0 6 0C3.42675 0 1.33334 2.09344 1.33334 4.66666V6H0.333344C0.28956 5.99997 0.246201 6.00857 0.205745 6.02532C0.165288 6.04206 0.12853 6.06661 0.09757 6.09757C0.0666105 6.12853 0.0420577 6.16529 0.0253158 6.20574C0.00857393 6.2462 -2.86884e-05 6.28956 7.18756e-08 6.33334V14.6667C7.18756e-08 15.402 0.597969 16 1.33334 16H10.6667C11.402 16 12 15.402 12 14.6667V6.33334C12 6.28956 11.9914 6.2462 11.9747 6.20574C11.9579 6.16529 11.9334 6.12853 11.9024 6.09757C11.8715 6.06661 11.8347 6.04206 11.7943 6.02532C11.7538 6.00857 11.7104 5.99997 11.6667 6ZM6.99806 12.9632C7.00322 13.0098 6.9985 13.057 6.98419 13.1016C6.96989 13.1463 6.94634 13.1874 6.91507 13.2223C6.8838 13.2572 6.84552 13.2852 6.80272 13.3043C6.75992 13.3234 6.71357 13.3333 6.66669 13.3333H5.33334C5.28646 13.3333 5.24011 13.3234 5.19731 13.3043C5.15451 13.2572 5.11623 13.2572 5.08496 13.2223C5.05369 13.1874 5.03014 13.1463 5.01584 13.1016C5.00154 13.057 4.99681 13.0098 5.00197 12.9632L5.21225 11.0723C4.87078 10.8239 4.66669 10.431 4.66669 10C4.66669 9.26466 5.26466 8.66666 6.00003 8.66666C6.73541 8.66666 7.33337 9.26462 7.33337 10C7.33337 10.431 7.12928 10.8239 6.78781 11.0723L6.99806 12.9632ZM8.66666 6H3.33334V4.66666C3.33334 3.19628 4.52962 2 6 2C7.47038 2 8.66666 3.19628 8.66666 4.66666V6Z'
+                    fill='#B292FF'
+                  />
+                </svg>
+                <span>3 дн.</span>
+              </div>
+              <div className='min-h-[128px] relative z-10 flex items-center justify-center'>
+                <img
+                  className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 -z-10'
+                  alt='Skin background'
+                  width='77'
+                  height='77'
+                  src='/images/gray-skin-bg.png'
+                />
+                <img
+                  className='drop-shadow-product-shd'
+                  src='/images/knife-product-2.png'
+                  alt='product'
+                />
+              </div>
+              <h3 className='text-[15px]'>MP5-SD</h3>
+              <span className='text-[#B292FF] text-[13px] mt-[10px] mb-4'>
+                from $332.59
+              </span>
+              <div className='relative'>
+                <div className='grid grid-cols-9 gap-[2px] pb-1'>
+                  {[
+                    '#4FCD33',
+                    '#76CD33',
+                    '#A4CD33',
+                    '#CDC833',
+                    '#ECE636',
+                    '#FFF600',
+                    '#FFD400',
+                    '#FFAE00',
+                    '#FF9000',
+                  ].map((color, index) => (
+                    <div
+                      key={index}
+                      className='h-[4px] w-full'
+                      style={{ backgroundColor: color }}
+                    />
+                  ))}
+                </div>
+                <img
+                  className='cursor-pointer absolute -bottom-[3px] right-[52px]'
+                  src='/images/arrow.svg'
+                  alt='Trade lock indicator'
+                  width={11}
+                  height={11}
+                />
+              </div>
+            </div>
+            <div
+              onClick={handleOpenModal}
+              className='bg-product-card-bg flex-[150px] bg-[length:100%_100%] bg-no-repeat pb-[14px] h-fit px-3 relative'
+            >
+              <div className='space-y-[3px] absolute top-[6px] right-1'>
+                <img
+                  src='/images/status-logo.svg'
+                  alt=''
+                  width={19}
+                  height={19}
+                />
+                <img
+                  src='/images/status-logo.svg'
+                  alt=''
+                  width={19}
+                  height={19}
+                />
+                <img
+                  src='/images/status-logo.svg'
+                  alt=''
+                  width={19}
+                  height={19}
+                />
+              </div>
+              <div className='min-h-[128px] relative z-10 flex items-center justify-center'>
+                <img
+                  className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 -z-10'
+                  alt='Skin background'
+                  width='77'
+                  height='77'
+                  src='/images/skin-bg.png'
+                />
+                <img
+                  className='drop-shadow-product-shd'
+                  src='/images/product-1.png'
+                  alt='product'
+                />
+              </div>
+              <h3 className='text-[15px]'>MP5-SD</h3>
+              <span className='text-[#B292FF] text-[13px] mt-[10px] mb-4'>
+                from $332.59
+              </span>
+              <div className='relative'>
+                <div className='flex gap-[2px] pb-1'>
+                  <div className='w-2 h-[4px] bg-[#4FCD33]'></div>
+                  <div className='w-[3px] h-[4px] bg-[#76CD33]'></div>
+                  <div className='w-[6px] h-[4px] bg-[#A4CD33]'></div>
+                  <div className='w-[3px] h-[4px] bg-[#CDC833]'></div>
+                  <div className='w-[6px] h-[4px] bg-[#ECE636]'></div>
+                  <div className='w-2 h-[4px] bg-[#FFF600]'></div>
+                  <div className='w-[3px] h-[4px] bg-[#FFD400]'></div>
+                  <div className='w-[3px] h-[4px] bg-[#FFAE00]'></div>
+                  <div className='w-full h-[4px] bg-[#FF4800]'></div>
+                </div>
+                <img
+                  className='cursor-pointer absolute -bottom-[3px] right-[52px]'
+                  src='/images/arrow.svg'
+                  alt='Trade lock indicator'
+                  width={11}
+                  height={11}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+const OfferSectionKnife = ({ handleOpenModal }) => {
+  const [activeTooltip, _] = useState(null); // Track which product shows tooltip
+  const tooltipRef = useRef(null); // Reference to the tooltip element
+  const productRefs = useRef([]); // References to blocked product elements
+
+  // Dynamic tooltip positioning
+  useEffect(() => {
+    if (
+      activeTooltip === null ||
+      !tooltipRef.current ||
+      !productRefs.current[activeTooltip]
+    )
+      return;
+
+    const tooltip = tooltipRef.current;
+    const product = productRefs.current[activeTooltip];
+    const productRect = product.getBoundingClientRect();
+    const tooltipRect = tooltip.getBoundingClientRect();
+    const viewportWidth = window.innerWidth;
+    // Default: position tooltip 60px to the left of the product
+    let leftPosition = productRect.left - tooltipRect.width - 60;
+
+    // Check if tooltip overflows on the left side of the viewport
+    if (leftPosition < 0) {
+      // Reposition to the right side of the product
+      leftPosition = productRect.right + 60;
+    }
+
+    // Ensure tooltip doesn't overflow on the right side
+    if (leftPosition + tooltipRect.width > viewportWidth) {
+      leftPosition = productRect.left - tooltipRect.width - 60; // Fallback to left if right overflows too
+    }
+
+    // Apply dynamic positioning
+    tooltip.style.left = `${leftPosition}px`;
+    // tooltip.style.top = `${productRect.top}px`;
+    tooltip.style.top = `${productRect.top - 130}px`;
+    tooltip.style.display = 'block';
+  }, [activeTooltip]);
+
+  // Hide tooltip when not active
+  useEffect(() => {
+    if (activeTooltip === null && tooltipRef.current) {
+      tooltipRef.current.style.display = 'none';
+    }
+  }, [activeTooltip]);
+
+  // Tooltip component to be rendered via portal
+  const Tooltip = () => (
+    <div
+      ref={tooltipRef}
+      className='tooltip bg-[#09083C38] pt-[29px] pb-[27px] px-[23px] rounded-[4px] absolute z-[1000] w-[556px] shadow-[6px_29px_60.9px_0px_#00000042] backdrop-blur-[56px] '
+      style={{ display: 'none' }}
+    >
+      <h3 className='text-[#B292FF] text-[15px]'>
+        Предмет заблокирован в Steam
+      </h3>
+      <h3 className='text-[15px] my-[19px]'>Истекает: 19.06.2025, 12:00:00</h3>
+      <p className='text-[#FFFFFF99]'>
+        После этого разблокируется возможность вывода в инвентарь
+      </p>
+    </div>
+  );
+
+  return (
+    <>
+      {createPortal(<Tooltip />, document.body)}
+      <div className='rounded-[9px] overflow-hidden bg-[#212044]'>
+        <div className='flex items-center justify-between py-[10px] px-[14px] flex-wrap gap-y-5'>
+          <div className='xl:w-[389px] w-full flex-1'>
             <Search className='sm:!bg-[#393959] !bg-[#303047] h-[30px]' />
           </div>
-        </div>
-        <div className='flex items-center sm:gap-6 gap-1 xl:w-fit sm:w-full justify-between'>
-          <div className='flex sm:gap-6 gap-1 sm:flex-row flex-row-reverse'>
-            <Dropdown
-              options={[
-                {
-                  id: 'sort-1',
-                  label: 'Price: Max',
-                  imageSrc: '/images/sort-1.svg',
-                },
-                {
-                  id: 'sort-2',
-                  label: 'Price: Min',
-                  imageSrc: '/images/sort-2.svg',
-                },
-                {
-                  id: 'sort-3',
-                  label: 'Float: Max',
-                  imageSrc: '/images/sort-1.svg',
-                },
-                {
-                  id: 'sort-4',
-                  label: 'Float: Min',
-                  imageSrc: '/images/sort-2.svg',
-                },
-              ]}
-              defaultOption={{
-                id: 'sort-0',
-                label: 'Relevance',
-                imageSrc: '/images/lines.svg',
-              }}
-            />
-
-            <Dropdown
-              options={[
-                {
-                  id: 'sort-1',
+          <div className='flex items-center sm:gap-6 gap-1 xl:w-fit w-full justify-between'>
+            <div className='flex gap-6'>
+              <Dropdown
+                options={[
+                  {
+                    id: 'sort-1',
+                    label: 'Price: Max',
+                    imageSrc: '/images/sort-1.svg',
+                  },
+                  {
+                    id: 'sort-2',
+                    label: 'Price: Min',
+                    imageSrc: '/images/sort-2.svg',
+                  },
+                  {
+                    id: 'sort-3',
+                    label: 'Float: Max',
+                    imageSrc: '/images/sort-1.svg',
+                  },
+                  {
+                    id: 'sort-4',
+                    label: 'Float: Min',
+                    imageSrc: '/images/sort-2.svg',
+                  },
+                ]}
+                defaultOption={{
+                  id: 'sort-0',
+                  label: 'Relevance',
+                  imageSrc: '/images/lines.svg',
+                }}
+              />
+              <Dropdown
+                options={[
+                  {
+                    id: 'sort-1',
+                    label: 'CS2',
+                    imageSrc: '/images/fors.svg',
+                  },
+                  {
+                    id: 'sort-2',
+                    label: 'CS:GO',
+                    imageSrc: '/images/fors.svg',
+                  },
+                ]}
+                defaultOption={{
+                  id: 'sort-0',
                   label: 'CS2',
                   imageSrc: '/images/fors.svg',
-                },
-                {
-                  id: 'sort-2',
-                  label: 'CS:GO',
-                  imageSrc: '/images/fors.svg',
-                },
-              ]}
-              defaultOption={{
-                id: 'sort-0',
-                label: 'CS2',
-                imageSrc: '/images/fors.svg',
-              }}
-            />
-          </div>
-          <button className='w-[33px] h-[31px] rounded-[4px] items-center justify-center bg-[#615FA6] sm:flex hidden'>
-            <img src='/images/load.svg' alt='' />
-          </button>
-        </div>
-        <button className='cursor-pointer sm:hidden block'>
-          <img src='/images/load.svg' alt='' />
-        </button>
-      </div>
-      <div className='md:py-5 py-3 md:px-[14px] px-[5px] flex flex-wrap bg-skin-card gap-[10px] custom-scroll overflow-y-auto max-h-[785px]'>
-        <div
-          onClick={handleOpenModal}
-          className='bg-product-card-bg flex-[150px] bg-[length:100%_100%] bg-no-repeat pb-[14px] h-fit px-3'
-        >
-          <div className='min-h-[128px] relative z-10 flex items-center justify-center'>
-            <img
-              className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 -z-10'
-              alt='Skin background'
-              width='77'
-              height='77'
-              src='/images/skin-bg.png'
-            />
-            <img
-              className='drop-shadow-product-shd'
-              src='/images/product-1.png'
-              alt='product'
-            />
-          </div>
-          <h3 className='text-[15px]'>MP5-SD</h3>
-          <span className='text-[#B292FF] text-[13px] mt-[10px] mb-4'>
-            from $332.59
-          </span>
-          <div className='relative'>
-            <div className='grid grid-cols-9 gap-[2px] pb-1'>
-              {[
-                '#4FCD33',
-                '#76CD33',
-                '#A4CD33',
-                '#CDC833',
-                '#ECE636',
-                '#FFF600',
-                '#FFD400',
-                '#FFAE00',
-                '#FF9000',
-              ].map((color, index) => (
-                <div
-                  key={index}
-                  className='h-[4px] w-full'
-                  style={{ backgroundColor: color }}
-                />
-              ))}
-            </div>
-            <img
-              className='cursor-pointer absolute -bottom-[3px] right-[52px]'
-              src='/images/arrow.svg'
-              alt='Trade lock indicator'
-              width={11}
-              height={11}
-            />
-          </div>
-        </div>
-        <div
-          onClick={handleOpenModal}
-          className='bg-product-card-bg flex-[150px] bg-[length:100%_100%] bg-no-repeat pb-[14px] h-fit px-3'
-        >
-          <div className='min-h-[128px] relative z-10 flex items-center justify-center'>
-            <img
-              className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 -z-10'
-              alt='Skin background'
-              width='77'
-              height='77'
-              src='/images/skin-bg.png'
-            />
-            <img
-              className='drop-shadow-product-shd'
-              src='/images/product-1.png'
-              alt='product'
-            />
-          </div>
-          <h3 className='text-[15px]'>MP5-SD</h3>
-          <span className='text-[#B292FF] text-[13px] mt-[10px] mb-4'>
-            from $332.59
-          </span>
-          <div className='relative'>
-            <div className='grid grid-cols-9 gap-[2px] pb-1'>
-              {[
-                '#4FCD33',
-                '#76CD33',
-                '#A4CD33',
-                '#CDC833',
-                '#ECE636',
-                '#FFF600',
-                '#FFD400',
-                '#FFAE00',
-                '#FF9000',
-              ].map((color, index) => (
-                <div
-                  key={index}
-                  className='h-[4px] w-full'
-                  style={{ backgroundColor: color }}
-                />
-              ))}
-            </div>
-            <img
-              className='cursor-pointer absolute -bottom-[3px] right-[52px]'
-              src='/images/arrow.svg'
-              alt='Trade lock indicator'
-              width={11}
-              height={11}
-            />
-          </div>
-        </div>
-        <div
-          onClick={handleOpenModal}
-          className='bg-product-card-bg flex-[150px] bg-[length:100%_100%] bg-no-repeat pb-[14px] h-fit px-3'
-        >
-          <div className='min-h-[128px] relative z-10 flex items-center justify-center'>
-            <img
-              className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 -z-10'
-              alt='Skin background'
-              width='77'
-              height='77'
-              src='/images/skin-bg.png'
-            />
-            <img
-              className='drop-shadow-product-shd'
-              src='/images/product-1.png'
-              alt='product'
-            />
-          </div>
-          <h3 className='text-[15px]'>MP5-SD</h3>
-          <span className='text-[#B292FF] text-[13px] mt-[10px] mb-4'>
-            from $332.59
-          </span>
-          <div className='relative'>
-            <div className='grid grid-cols-9 gap-[2px] pb-1'>
-              {[
-                '#4FCD33',
-                '#76CD33',
-                '#A4CD33',
-                '#CDC833',
-                '#ECE636',
-                '#FFF600',
-                '#FFD400',
-                '#FFAE00',
-                '#FF9000',
-              ].map((color, index) => (
-                <div
-                  key={index}
-                  className='h-[4px] w-full'
-                  style={{ backgroundColor: color }}
-                />
-              ))}
-            </div>
-            <img
-              className='cursor-pointer absolute -bottom-[3px] right-[52px]'
-              src='/images/arrow.svg'
-              alt='Trade lock indicator'
-              width={11}
-              height={11}
-            />
-          </div>
-        </div>
-        <div
-          onClick={handleOpenModal}
-          className='bg-product-card-bg flex-[150px] bg-[length:100%_100%] bg-no-repeat pb-[14px] h-fit px-3 relative'
-        >
-          <div className='space-y-[3px] absolute top-[6px] right-1'>
-            <img src='/images/status-logo.svg' alt='' width={19} height={19} />
-            <img src='/images/status-logo.svg' alt='' width={19} height={19} />
-            <img src='/images/status-logo.svg' alt='' width={19} height={19} />
-          </div>
-          <div className='min-h-[128px] relative z-10 flex items-center justify-center'>
-            <img
-              className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 -z-10'
-              alt='Skin background'
-              width='77'
-              height='77'
-              src='/images/skin-bg.png'
-            />
-            <img
-              className='drop-shadow-product-shd'
-              src='/images/product-1.png'
-              alt='product'
-            />
-          </div>
-          <h3 className='text-[15px]'>MP5-SD</h3>
-          <span className='text-[#B292FF] text-[13px] mt-[10px] mb-4'>
-            from $332.59
-          </span>
-          <div className='relative'>
-            <div className='flex gap-[2px] pb-1'>
-              <div className='w-2 h-[4px] bg-[#4FCD33]'></div>
-              <div className='w-[3px] h-[4px] bg-[#76CD33]'></div>
-              <div className='w-[6px] h-[4px] bg-[#A4CD33]'></div>
-              <div className='w-[3px] h-[4px] bg-[#CDC833]'></div>
-              <div className='w-[6px] h-[4px] bg-[#ECE636]'></div>
-              <div className='w-2 h-[4px] bg-[#FFF600]'></div>
-              <div className='w-[3px] h-[4px] bg-[#FFD400]'></div>
-              <div className='w-[3px] h-[4px] bg-[#FFAE00]'></div>
-              <div className='w-full h-[4px] bg-[#FF4800]'></div>
-            </div>
-            <img
-              className='cursor-pointer absolute -bottom-[3px] right-[52px]'
-              src='/images/arrow.svg'
-              alt='Trade lock indicator'
-              width={11}
-              height={11}
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
-const OfferSectionKnife = ({ handleOpenModal }) => (
-  <div className='rounded-[9px] overflow-hidden bg-[#212044]'>
-    <div className='flex items-center justify-between py-[10px] px-[14px] flex-wrap gap-y-5'>
-      <div className='xl:w-[389px] w-full flex-1'>
-        <Search className='sm:!bg-[#393959] !bg-[#303047] h-[30px]' />
-      </div>
-      <div className='flex items-center sm:gap-6 gap-1 xl:w-fit w-full justify-between'>
-        <div className='flex gap-6'>
-          <Dropdown
-            options={[
-              {
-                id: 'sort-1',
-                label: 'Price: Max',
-                imageSrc: '/images/sort-1.svg',
-              },
-              {
-                id: 'sort-2',
-                label: 'Price: Min',
-                imageSrc: '/images/sort-2.svg',
-              },
-              {
-                id: 'sort-3',
-                label: 'Float: Max',
-                imageSrc: '/images/sort-1.svg',
-              },
-              {
-                id: 'sort-4',
-                label: 'Float: Min',
-                imageSrc: '/images/sort-2.svg',
-              },
-            ]}
-            defaultOption={{
-              id: 'sort-0',
-              label: 'Relevance',
-              imageSrc: '/images/lines.svg',
-            }}
-          />
-
-          <Dropdown
-            options={[
-              {
-                id: 'sort-1',
-                label: 'CS2',
-                imageSrc: '/images/fors.svg',
-              },
-              {
-                id: 'sort-2',
-                label: 'CS:GO',
-                imageSrc: '/images/fors.svg',
-              },
-            ]}
-            defaultOption={{
-              id: 'sort-0',
-              label: 'CS2',
-              imageSrc: '/images/fors.svg',
-            }}
-          />
-        </div>
-        <button className='w-[33px] h-[31px] rounded-[4px] flex items-center justify-center bg-[#615FA6]'>
-          <img src='/images/load.svg' alt='' />
-        </button>
-      </div>
-    </div>
-    <div className='py-5 px-[14px] flex flex-wrap bg-skin-card gap-[10px] custom-scroll overflow-y-auto max-h-[785px] relative'>
-      {/* tooltip */}
-      {/* <div className='tooltip bg-[#09083C38] pt-[29px] pb-[27px] px-[23px] rounded-[4px] absolute left-10 top-10 z-[100] w-[556px] shadow-[6px_29px_60.9px_0px_#00000042]  backdrop-blur-[56px]'>
-        <h3 className='text-[#B292FF] text-[15px]'>Предмет заблокирован в Steam</h3>
-        <h3 className='text-[15px] my-[19px]'>Истекает: 19.06.2025, 12:00:00</h3>
-        <p className='text-[#FFFFFF99]'>После этого разблокируется возможность вывода в инвентарь</p>
-      </div> */}
-      <div
-        onClick={handleOpenModal}
-        className='bg-product-card-bg bg-[length:100%_100%] flex-[150px] bg-no-repeat pb-[14px] h-fit px-3'
-      >
-        <div className='min-h-[128px] relative z-10 flex items-center justify-center'>
-          <img
-            className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 -z-10'
-            alt='Skin background'
-            width='77'
-            height='77'
-            src='/images/skin-bg.png'
-          />
-          <img
-            className='drop-shadow-product-shd'
-            src='/images/knife-product-2.png'
-            alt='product'
-          />
-        </div>
-        <h3 className='text-[15px]'>MP5-SD</h3>
-        <span className='text-[#B292FF] text-[13px] mt-[10px] mb-4'>
-          from $332.59
-        </span>
-        <div className='relative'>
-          <div className='grid grid-cols-9 gap-[2px] pb-1'>
-            {[
-              '#4FCD33',
-              '#76CD33',
-              '#A4CD33',
-              '#CDC833',
-              '#ECE636',
-              '#FFF600',
-              '#FFD400',
-              '#FFAE00',
-              '#FF9000',
-            ].map((color, index) => (
-              <div
-                key={index}
-                className='h-[4px] w-full'
-                style={{ backgroundColor: color }}
+                }}
               />
-            ))}
+            </div>
+            <button className='w-[33px] h-[31px] rounded-[4px] flex items-center justify-center bg-[#615FA6]'>
+              <img src='/images/load.svg' alt='Load icon' />
+            </button>
           </div>
-          <img
-            className='cursor-pointer absolute -bottom-[3px] right-[52px]'
-            src='/images/arrow.svg'
-            alt='Trade lock indicator'
-            width={11}
-            height={11}
-          />
         </div>
-      </div>
-      <div
-        onClick={handleOpenModal}
-        className='bg-product-card-bg bg-[length:100%_100%] flex-[150px] bg-no-repeat pb-[14px] h-fit px-3'
-      >
-        <div className='min-h-[128px] relative z-10 flex items-center justify-center'>
-          <img
-            className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 -z-10'
-            alt='Skin background'
-            width='77'
-            height='77'
-            src='/images/skin-bg.png'
-          />
-          <img
-            className='drop-shadow-product-shd'
-            src='/images/knife-product-2.png'
-            alt='product'
-          />
-        </div>
-        <h3 className='text-[15px]'>MP5-SD</h3>
-        <span className='text-[#B292FF] text-[13px] mt-[10px] mb-4'>
-          from $332.59
-        </span>
-        <div className='relative'>
-          <div className='grid grid-cols-9 gap-[2px] pb-1'>
-            {[
-              '#4FCD33',
-              '#76CD33',
-              '#A4CD33',
-              '#CDC833',
-              '#ECE636',
-              '#FFF600',
-              '#FFD400',
-              '#FFAE00',
-              '#FF9000',
-            ].map((color, index) => (
-              <div
-                key={index}
-                className='h-[4px] w-full'
-                style={{ backgroundColor: color }}
-              />
-            ))}
-          </div>
-          <img
-            className='cursor-pointer absolute -bottom-[3px] right-[52px]'
-            src='/images/arrow.svg'
-            alt='Trade lock indicator'
-            width={11}
-            height={11}
-          />
-        </div>
-      </div>
-      <div
-        onClick={handleOpenModal}
-        className='bg-product-card-bg bg-[length:100%_100%] flex-[150px] bg-no-repeat pb-[14px] h-fit px-3 relative'
-      >
-        <div className='rounded-[4px] bg-[#615FA638] p-[10px] flex gap-2 items-center absolute top-[6px] right-2 z-50 cursor-pointer'>
-          <svg
-            width='12'
-            height='16'
-            viewBox='0 0 12 16'
-            fill='none'
-            xmlns='http://www.w3.org/2000/svg'
+        <div className='py-5 px-[14px] flex flex-wrap bg-skin-card gap-[10px] custom-scroll overflow-y-auto max-h-[785px] relative'>
+          <div
+            onClick={handleOpenModal}
+            className='bg-product-card-bg bg-[length:100%_100%] flex-[150px] bg-no-repeat pb-[14px] h-fit px-3'
           >
-            <path
-              d='M11.6667 6H10.6667V4.66666C10.6667 2.09344 8.57325 0 6 0C3.42675 0 1.33334 2.09344 1.33334 4.66666V6H0.333344C0.28956 5.99997 0.246201 6.00857 0.205745 6.02532C0.165288 6.04206 0.12853 6.06661 0.09757 6.09757C0.0666105 6.12853 0.0420577 6.16529 0.0253158 6.20574C0.00857393 6.2462 -2.86884e-05 6.28956 7.18756e-08 6.33334V14.6667C7.18756e-08 15.402 0.597969 16 1.33334 16H10.6667C11.402 16 12 15.402 12 14.6667V6.33334C12 6.28956 11.9914 6.2462 11.9747 6.20574C11.9579 6.16529 11.9334 6.12853 11.9024 6.09757C11.8715 6.06661 11.8347 6.04206 11.7943 6.02532C11.7538 6.00857 11.7104 5.99997 11.6667 6ZM6.99806 12.9632C7.00322 13.0098 6.9985 13.057 6.98419 13.1016C6.96989 13.1463 6.94634 13.1874 6.91507 13.2223C6.8838 13.2572 6.84552 13.2852 6.80272 13.3043C6.75992 13.3234 6.71357 13.3333 6.66669 13.3333H5.33334C5.28646 13.3333 5.24011 13.3234 5.19731 13.3043C5.15451 13.2852 5.11623 13.2572 5.08496 13.2223C5.05369 13.1874 5.03014 13.1463 5.01584 13.1016C5.00154 13.057 4.99681 13.0098 5.00197 12.9632L5.21225 11.0723C4.87078 10.8239 4.66669 10.431 4.66669 10C4.66669 9.26466 5.26466 8.66666 6.00003 8.66666C6.73541 8.66666 7.33337 9.26462 7.33337 10C7.33337 10.431 7.12928 10.8239 6.78781 11.0723L6.99806 12.9632ZM8.66666 6H3.33334V4.66666C3.33334 3.19628 4.52962 2 6 2C7.47038 2 8.66666 3.19628 8.66666 4.66666V6Z'
-              fill='#B292FF'
-            />
-          </svg>
-          <span>3 дн.</span>
-        </div>
-        <div className='min-h-[128px] relative z-10 flex items-center justify-center'>
-          <img
-            className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 -z-10'
-            alt='Skin background'
-            width='77'
-            height='77'
-            src='/images/skin-bg.png'
-          />
-          <img
-            className='drop-shadow-product-shd'
-            src='/images/knife-product-2.png'
-            alt='product'
-          />
-        </div>
-        <h3 className='text-[15px]'>MP5-SD</h3>
-        <span className='text-[#B292FF] text-[13px] mt-[10px] mb-4'>
-          from $332.59
-        </span>
-        <div className='relative'>
-          <div className='grid grid-cols-9 gap-[2px] pb-1'>
-            {[
-              '#4FCD33',
-              '#76CD33',
-              '#A4CD33',
-              '#CDC833',
-              '#ECE636',
-              '#FFF600',
-              '#FFD400',
-              '#FFAE00',
-              '#FF9000',
-            ].map((color, index) => (
-              <div
-                key={index}
-                className='h-[4px] w-full'
-                style={{ backgroundColor: color }}
+            <div className='min-h-[128px] relative z-10 flex items-center justify-center'>
+              <img
+                className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 -z-10'
+                alt='Skin background'
+                width='77'
+                height='77'
+                src='/images/skin-bg.png'
               />
-            ))}
+              <img
+                className='drop-shadow-product-shd'
+                src='/images/knife-product-2.png'
+                alt='product'
+              />
+            </div>
+            <h3 className='text-[15px]'>MP5-SD</h3>
+            <span className='text-[#B292FF] text-[13px] mt-[10px] mb-4'>
+              from $332.59
+            </span>
+            <div className='relative'>
+              <div className='grid grid-cols-9 gap-[2px] pb-1'>
+                {[
+                  '#4FCD33',
+                  '#76CD33',
+                  '#A4CD33',
+                  '#CDC833',
+                  '#ECE636',
+                  '#FFF600',
+                  '#FFD400',
+                  '#FFAE00',
+                  '#FF9000',
+                ].map((color, index) => (
+                  <div
+                    key={index}
+                    className='h-[4px] w-full'
+                    style={{ backgroundColor: color }}
+                  />
+                ))}
+              </div>
+              <img
+                className='cursor-pointer absolute -bottom-[3px] right-[52px]'
+                src='/images/arrow.svg'
+                alt='Trade lock indicator'
+                width={11}
+                height={11}
+              />
+            </div>
           </div>
-          <img
-            className='cursor-pointer absolute -bottom-[3px] right-[52px]'
-            src='/images/arrow.svg'
-            alt='Trade lock indicator'
-            width={11}
-            height={11}
-          />
+          <div
+            onClick={handleOpenModal}
+            className='bg-product-card-bg bg-[length:100%_100%] flex-[150px] bg-no-repeat pb-[14px] h-fit px-3'
+          >
+            <div className='min-h-[128px] relative z-10 flex items-center justify-center'>
+              <img
+                className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 -z-10'
+                alt='Skin background'
+                width='77'
+                height='77'
+                src='/images/skin-bg.png'
+              />
+              <img
+                className='drop-shadow-product-shd'
+                src='/images/knife-product-2.png'
+                alt='product'
+              />
+            </div>
+            <h3 className='text-[15px]'>MP5-SD</h3>
+            <span className='text-[#B292FF] text-[13px] mt-[10px] mb-4'>
+              from $332.59
+            </span>
+            <div className='relative'>
+              <div className='grid grid-cols-9 gap-[2px] pb-1'>
+                {[
+                  '#4FCD33',
+                  '#76CD33',
+                  '#A4CD33',
+                  '#CDC833',
+                  '#ECE636',
+                  '#FFF600',
+                  '#FFD400',
+                  '#FFAE00',
+                  '#FF9000',
+                ].map((color, index) => (
+                  <div
+                    key={index}
+                    className='h-[4px] w-full'
+                    style={{ backgroundColor: color }}
+                  />
+                ))}
+              </div>
+              <img
+                className='cursor-pointer absolute -bottom-[3px] right-[52px]'
+                src='/images/arrow.svg'
+                alt='Trade lock indicator'
+                width={11}
+                height={11}
+              />
+            </div>
+          </div>
+          <div
+            onClick={handleOpenModal}
+            className='bg-product-card-bg bg-[length:100%_100%] flex-[150px] bg-no-repeat pb-[14px] h-fit px-3 relative'
+          >
+            <div className='space-y-[3px] absolute top-[6px] right-1'>
+              <img
+                src='/images/status-logo.svg'
+                alt=''
+                width={19}
+                height={19}
+              />
+              <img
+                src='/images/status-logo.svg'
+                alt=''
+                width={19}
+                height={19}
+              />
+              <img
+                src='/images/status-logo.svg'
+                alt=''
+                width={19}
+                height={19}
+              />
+            </div>
+            <div className='min-h-[128px] relative z-10 flex items-center justify-center'>
+              <img
+                className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 -z-10'
+                alt='Skin background'
+                width='77'
+                height='77'
+                src='/images/skin-bg.png'
+              />
+              <img
+                className='drop-shadow-product-shd'
+                src='/images/knife-product-2.png'
+                alt='product'
+              />
+            </div>
+            <h3 className='text-[15px]'>MP5-SD</h3>
+            <span className='text-[#B292FF] text-[13px] mt-[10px] mb-4'>
+              from $332.59
+            </span>
+            <div className='relative'>
+              <div className='flex gap-[2px] pb-1'>
+                <div className='w-2 h-[4px] bg-[#4FCD33]'></div>
+                <div className='w-[3px] h-[4px] bg-[#76CD33]'></div>
+                <div className='w-[6px] h-[4px] bg-[#A4CD33]'></div>
+                <div className='w-[3px] h-[4px] bg-[#CDC833]'></div>
+                <div className='w-[6px] h-[4px] bg-[#ECE636]'></div>
+                <div className='w-2 h-[4px] bg-[#FFF600]'></div>
+                <div className='w-[3px] h-[4px] bg-[#FFD400]'></div>
+                <div className='w-[3px] h-[4px] bg-[#FFAE00]'></div>
+                <div className='w-full h-[4px] bg-[#FF4800]'></div>
+              </div>
+              <img
+                className='cursor-pointer absolute -bottom-[3px] right-[52px]'
+                src='/images/arrow.svg'
+                alt='Trade lock indicator'
+                width={11}
+                height={11}
+              />
+            </div>
+          </div>
+          <div
+            onClick={handleOpenModal}
+            className='bg-product-card-bg bg-[length:100%_100%] flex-[150px] bg-no-repeat pb-[14px] h-fit px-3 relative'
+          >
+            <div className='space-y-[3px] absolute top-[6px] right-1'>
+              <img
+                src='/images/status-logo.svg'
+                alt=''
+                width={19}
+                height={19}
+              />
+              <img
+                src='/images/status-logo.svg'
+                alt=''
+                width={19}
+                height={19}
+              />
+              <img
+                src='/images/status-logo.svg'
+                alt=''
+                width={19}
+                height={19}
+              />
+            </div>
+            <div className='min-h-[128px] relative z-10 flex items-center justify-center'>
+              <img
+                className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 -z-10'
+                alt='Skin background'
+                width='77'
+                height='77'
+                src='/images/skin-bg.png'
+              />
+              <img
+                className='drop-shadow-product-shd'
+                src='/images/knife-product-2.png'
+                alt='product'
+              />
+            </div>
+            <h3 className='text-[15px]'>MP5-SD</h3>
+            <span className='text-[#B292FF] text-[13px] mt-[10px] mb-4'>
+              from $332.59
+            </span>
+            <div className='relative'>
+              <div className='flex gap-[2px] pb-1'>
+                <div className='w-2 h-[4px] bg-[#4FCD33]'></div>
+                <div className='w-[3px] h-[4px] bg-[#76CD33]'></div>
+                <div className='w-[6px] h-[4px] bg-[#A4CD33]'></div>
+                <div className='w-[3px] h-[4px] bg-[#CDC833]'></div>
+                <div className='w-[6px] h-[4px] bg-[#ECE636]'></div>
+                <div className='w-2 h-[4px] bg-[#FFF600]'></div>
+                <div className='w-[3px] h-[4px] bg-[#FFD400]'></div>
+                <div className='w-[3px] h-[4px] bg-[#FFAE00]'></div>
+                <div className='w-full h-[4px] bg-[#FF4800]'></div>
+              </div>
+              <img
+                className='cursor-pointer absolute -bottom-[3px] right-[52px]'
+                src='/images/arrow.svg'
+                alt='Trade lock indicator'
+                width={11}
+                height={11}
+              />
+            </div>
+          </div>
         </div>
       </div>
-      <div
-        onClick={handleOpenModal}
-        className='bg-product-card-bg bg-[length:100%_100%] flex-[150px] bg-no-repeat pb-[14px] h-fit px-3 relative'
-      >
-        <div className='space-y-[3px] absolute top-[6px] right-1'>
-          <img src='/images/status-logo.svg' alt='' width={19} height={19} />
-          <img src='/images/status-logo.svg' alt='' width={19} height={19} />
-          <img src='/images/status-logo.svg' alt='' width={19} height={19} />
-        </div>
-        <div className='min-h-[128px] relative z-10 flex items-center justify-center'>
-          <img
-            className='absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 -z-10'
-            alt='Skin background'
-            width='77'
-            height='77'
-            src='/images/skin-bg.png'
-          />
-          <img
-            className='drop-shadow-product-shd'
-            src='/images/knife-product-2.png'
-            alt='product'
-          />
-        </div>
-        <h3 className='text-[15px]'>MP5-SD</h3>
-        <span className='text-[#B292FF] text-[13px] mt-[10px] mb-4'>
-          from $332.59
-        </span>
-        <div className='relative'>
-          <div className='flex gap-[2px] pb-1'>
-            <div className='w-2 h-[4px] bg-[#4FCD33]'></div>
-            <div className='w-[3px] h-[4px] bg-[#76CD33]'></div>
-            <div className='w-[6px] h-[4px] bg-[#A4CD33]'></div>
-            <div className='w-[3px] h-[4px] bg-[#CDC833]'></div>
-            <div className='w-[6px] h-[4px] bg-[#ECE636]'></div>
-            <div className='w-2 h-[4px] bg-[#FFF600]'></div>
-            <div className='w-[3px] h-[4px] bg-[#FFD400]'></div>
-            <div className='w-[3px] h-[4px] bg-[#FFAE00]'></div>
-            <div className='w-full h-[4px] bg-[#FF4800]'></div>
-          </div>
-          <img
-            className='cursor-pointer absolute -bottom-[3px] right-[52px]'
-            src='/images/arrow.svg'
-            alt='Trade lock indicator'
-            width={11}
-            height={11}
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-);
+    </>
+  );
+};
 
 // Main TradeSkins component
 const TradeSkins = () => {
@@ -918,7 +1128,10 @@ const TradeSkins = () => {
             <OfferSectionKnife handleOpenModal={handleOpenModal} />
           </div>
 
-          <div className='sm:hidden flex mx-[6px] py-[13px] px-[10px] bg-text-gradient justify-between items-center rounded-[4px]' onClick={handleOpenBasket}>
+          <div
+            className='sm:hidden flex mx-[6px] py-[13px] px-[10px] bg-text-gradient justify-between items-center rounded-[4px]'
+            onClick={handleOpenBasket}
+          >
             <div>
               <span className='text-xs mb-2 text-[#0A0D1C]'>Вы отдаете:</span>
               <p className='text-[#303137]'>

@@ -39,6 +39,7 @@ export default {
         'skin-card': "linear-gradient(180deg, #161530 0%, #161525 100%)",
         'skin-child-card': "linear-gradient(180deg, #14182B 0%, rgba(41, 27, 90, 0.7) 44.71%, #14182B 100%)",
         "tooltip-bg": "url(/images/tooltip-bg.png)",
+        "block-bg": "url(/images/block-bg.png)",
       },
       backgroundColor: {
         'custom-dark': 'rgba(10, 13, 28, 0.86)',
