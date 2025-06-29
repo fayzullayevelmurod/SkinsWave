@@ -43,7 +43,7 @@ export default function Modal({ isOpen, onClose }) {
           <div className="relative md:hidden">
             <div className="absolute inset-0 bg-[#2120441A] backdrop-blur-[26.1px] z-0"></div>
             <div className="relative z-10 p-[15px]">
-              <span className="text-sm mb-3">Desert Eagle - Field Tested</span>
+              <span className="text-sm mb-3 opacity-[0.43]">Desert Eagle - Field Tested</span>
               <h4 className="text-[17px]">Okean Drive</h4>
             </div>
           </div>

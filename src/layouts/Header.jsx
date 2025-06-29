@@ -198,9 +198,9 @@ export default function Header() {
             </a>
           </li>
           <li>
-            <a
+            <Link
               className='flex items-center justify-between text-xs-base text-white py-6 border-b border-[#D9D9D936]'
-              href='#!'
+              to='/trade-skins'
             >
               <span>Trade Skins</span>
               <svg
@@ -217,7 +217,7 @@ export default function Header() {
                   fill='#38383B'
                 />
               </svg>
-            </a>
+            </Link>
           </li>
           <li>
             <a
