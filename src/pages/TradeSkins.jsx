@@ -82,15 +82,15 @@ const OfferSection = ({ title, total, skins, handleOpenFilter, handleOpenModal }
       </div>
     </div>
     <div className='sm:rounded-[9px] overflow-hidden sm:bg-[#212044] bg-skin-card'>
-      <div className='flex sm:flex-wrap sm:flex-row flex-row-reverse gap-y-5 items-center justify-between py-[10px] px-[14px]'>
-        <div className='flex gap-1'>
+      <div className='flex sm:flex-wrap sm:bg-[#212044] sm:flex-row flex-row-reverse gap-y-5 items-center justify-between py-[10px] px-[14px]'>
+        <div className='flex gap-1 xl:w-[389px] md:w-full md:flex-1'>
           <button
             className='sm:hidden w-[33px] h-[33px] bg-[#303047] rounded-[4px] flex items-center justify-center'
             onClick={handleOpenFilter}
           >
             <img src='/images/settings.svg' alt='' />
           </button>
-          <div className='xl:w-[389px] w-full flex-1'>
+          <div className='md:w-full'>
             <Search className='sm:!bg-[#393959] !bg-[#303047] h-[30px]' />
           </div>
         </div>
@@ -349,7 +349,7 @@ const OfferSection = ({ title, total, skins, handleOpenFilter, handleOpenModal }
   </div>
 );
 
-const OfferSectionKnife = ({handleOpenModal}) => (
+const OfferSectionKnife = ({ handleOpenModal }) => (
   <div className='rounded-[9px] overflow-hidden bg-[#212044]'>
     <div className='flex items-center justify-between py-[10px] px-[14px] flex-wrap gap-y-5'>
       <div className='xl:w-[389px] w-full flex-1'>
